@@ -38,6 +38,17 @@ def home():
     return "Welcome to MoviWeb App!"
 
 
+@app.route("/users")
+def list_users():
+    """Returns all users currently stored in the database."""
+
+    users = data_manager.get_users()
+
+    # Temporarily converts the list of User objects into a string.
+    # A proper HTML template will replace this later.
+    return str(users)
+
+
 if __name__ == "__main__":
     # The application context gives SQLAlchemy access to the
     # Flask application's database configuration.
