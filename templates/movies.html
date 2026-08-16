@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Favorite Movies</h1>
+
+    <ul class="movie-list">
+        {% for movie in movies %}
+            <li class="movie-entry">
+                <h2>{{ movie.name }}</h2>
+
+                <p>Director: {{ movie.director }}</p>
+                <p>Year: {{ movie.year }}</p>
+
+                <img
+                    src="{{ movie.poster_url }}"
+                    alt="Poster for {{ movie.name }}"
+                >
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('index') }}">Back to users</a>
+{% endblock %}

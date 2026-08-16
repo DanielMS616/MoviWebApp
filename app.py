@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, redirect, render_template, request, url_for
 
 from data_manager import DataManager
 from models import db, Movie
@@ -32,21 +32,39 @@ data_manager = DataManager()
 
 
 @app.route("/")
-def home():
-    """Displays a simple welcome message."""
-
-    return "Welcome to MoviWeb App!"
-
-
-@app.route("/users")
-def list_users():
-    """Returns all users currently stored in the database."""
+def index():
+    """Displays all registered users."""
 
     users = data_manager.get_users()
 
-    # Temporarily converts the list of User objects into a string.
-    # A proper HTML template will replace this later.
-    return str(users)
+    return render_template(
+        "index.html",
+        users=users
+    )
+
+
+@app.route("/users", methods=["POST"])
+def create_user():
+    """Creates a new user from the submitted form data."""
+
+    name = request.form.get("name", "").strip()
+
+    if name:
+        data_manager.create_user(name)
+
+    return redirect(url_for("index"))
+
+
+@app.route("/users/<int:user_id>/movies", methods=["GET"])
+def get_movies(user_id):
+    """Displays all favorite movies belonging to a user."""
+
+    movies = data_manager.get_movies(user_id)
+
+    return render_template(
+        "movies.html",
+        movies=movies
+    )
 
 
 if __name__ == "__main__":
