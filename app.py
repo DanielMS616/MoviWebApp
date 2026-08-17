@@ -93,7 +93,8 @@ def add_movie(user_id):
             "https://www.omdbapi.com/",
             params={
                 "apikey": api_key,
-                "t": title
+                "t": title,
+                "type": "movie"
             },
             timeout=10
         )
