@@ -67,6 +67,13 @@ def get_movies(user_id):
     )
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    """Displays a custom page when a requested resource is not found."""
+
+    return render_template("404.html"), 404
+
+
 if __name__ == "__main__":
     # The application context gives SQLAlchemy access to the
     # Flask application's database configuration.
