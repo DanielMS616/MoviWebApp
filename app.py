@@ -74,14 +74,22 @@ def get_movies(user_id):
     )
 
 
-@app.route("/users/<int:user_id>/movies", methods=["POST"])
-def add_movie(user_id):
-    """Adds a movie to a user's list using data from OMDb."""
+@app.route(
+    "/users/<int:user_id>/movies/search",
+    methods=["GET"]
+)
+def search_movies(user_id):
+    """Searches OMDb for movies matching the user's search query."""
 
-    title = request.form.get("title", "").strip()
+    query = request.args.get("query", "").strip()
+    movies = data_manager.get_movies(user_id)
 
-    if not title:
-        return redirect(url_for("get_movies", user_id=user_id))
+    if not query:
+        return render_template(
+            "movies.html",
+            movies=movies,
+            user_id=user_id
+        )
 
     api_key = os.getenv("OMDB_API_KEY")
 
@@ -93,8 +101,9 @@ def add_movie(user_id):
             "https://www.omdbapi.com/",
             params={
                 "apikey": api_key,
-                "t": title,
-                "type": "movie"
+                "s": query,
+                "type": "movie",
+                "page": 1
             },
             timeout=10
         )
@@ -102,7 +111,81 @@ def add_movie(user_id):
         response.raise_for_status()
 
     except requests.RequestException as error:
-        print(f"OMDb request failed: {error}")
+        print(f"OMDb search request failed: {error}")
+
+        return "Could not connect to OMDb.", 502
+
+    search_data = response.json()
+
+    if search_data.get("Response") == "False":
+        omdb_error = search_data.get("Error", "")
+
+        if omdb_error == "Too many results.":
+            search_error = (
+                "Too many results. Please refine your search."
+            )
+        else:
+            search_error = "No movies found."
+
+        return render_template(
+            "movies.html",
+            movies=movies,
+            user_id=user_id,
+            query=query,
+            search_results=[],
+            total_results=0,
+            search_error=search_error
+        )
+
+    search_results = search_data.get("Search", [])
+    total_results = int(
+        search_data.get("totalResults", 0)
+    )
+
+    return render_template(
+        "movies.html",
+        movies=movies,
+        user_id=user_id,
+        query=query,
+        search_results=search_results,
+        total_results=total_results,
+        search_error=None
+    )
+
+
+@app.route(
+    "/users/<int:user_id>/movies",
+    methods=["POST"]
+)
+def add_movie(user_id):
+    """Adds a selected OMDb movie to a user's favorite movies."""
+
+    imdb_id = request.form.get("imdb_id", "").strip()
+
+    if not imdb_id:
+        return redirect(
+            url_for("get_movies", user_id=user_id)
+        )
+
+    api_key = os.getenv("OMDB_API_KEY")
+
+    if not api_key:
+        return "OMDb API key is not configured.", 500
+
+    try:
+        response = requests.get(
+            "https://www.omdbapi.com/",
+            params={
+                "apikey": api_key,
+                "i": imdb_id
+            },
+            timeout=10
+        )
+
+        response.raise_for_status()
+
+    except requests.RequestException as error:
+        print(f"OMDb movie request failed: {error}")
 
         return "Could not connect to OMDb.", 502
 
@@ -110,6 +193,9 @@ def add_movie(user_id):
 
     if movie_data.get("Response") == "False":
         return "Movie could not be found.", 404
+
+    if movie_data.get("Type") != "movie":
+        return "Selected result is not a movie.", 400
 
     movie = Movie(
         name=movie_data["Title"],
@@ -121,7 +207,9 @@ def add_movie(user_id):
 
     data_manager.add_movie(movie)
 
-    return redirect(url_for("get_movies", user_id=user_id))
+    return redirect(
+        url_for("get_movies", user_id=user_id)
+    )
 
 
 @app.route(
