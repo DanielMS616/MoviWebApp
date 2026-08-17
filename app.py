@@ -123,6 +123,26 @@ def add_movie(user_id):
     return redirect(url_for("get_movies", user_id=user_id))
 
 
+@app.route(
+    "/users/<int:user_id>/movies/<int:movie_id>/update",
+    methods=["POST"]
+)
+def update_movie(user_id, movie_id):
+    """Updates the title of a movie."""
+
+    new_title = request.form.get("title", "").strip()
+
+    if new_title:
+        data_manager.update_movie(
+            movie_id,
+            new_title
+        )
+
+    return redirect(
+        url_for("get_movies", user_id=user_id)
+    )
+
+
 @app.errorhandler(404)
 def page_not_found(error):
     """Displays a custom page when a requested resource is not found."""
