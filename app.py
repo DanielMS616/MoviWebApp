@@ -1,5 +1,6 @@
 import os
 
+import requests
 from flask import Flask, redirect, render_template, request, url_for
 
 from data_manager import DataManager
@@ -63,8 +64,58 @@ def get_movies(user_id):
 
     return render_template(
         "movies.html",
-        movies=movies
+        movies=movies,
+        user_id=user_id
     )
+
+
+@app.route("/users/<int:user_id>/movies", methods=["POST"])
+def add_movie(user_id):
+    """Adds a movie to a user's list using data from OMDb."""
+
+    title = request.form.get("title", "").strip()
+
+    if not title:
+        return redirect(url_for("get_movies", user_id=user_id))
+
+    api_key = os.getenv("OMDB_API_KEY")
+
+    if not api_key:
+        return "OMDb API key is not configured.", 500
+
+    try:
+        response = requests.get(
+            "https://www.omdbapi.com/",
+            params={
+                "apikey": api_key,
+                "t": title
+            },
+            timeout=10
+        )
+
+        response.raise_for_status()
+
+    except requests.RequestException as error:
+        print(f"OMDb request failed: {error}")
+
+        return "Could not connect to OMDb.", 502
+
+    movie_data = response.json()
+
+    if movie_data.get("Response") == "False":
+        return "Movie could not be found.", 404
+
+    movie = Movie(
+        name=movie_data["Title"],
+        director=movie_data["Director"],
+        year=int(movie_data["Year"]),
+        poster_url=movie_data["Poster"],
+        user_id=user_id
+    )
+
+    data_manager.add_movie(movie)
+
+    return redirect(url_for("get_movies", user_id=user_id))
 
 
 @app.errorhandler(404)
