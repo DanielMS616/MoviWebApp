@@ -30,22 +30,24 @@ class DataManager:
         db.session.add(movie)
         db.session.commit()
 
-    def update_movie(self, movie_id, new_title):
-        """Updates the title of a specific movie."""
+    def update_movie(self, user_id, movie_id, new_title):
+        """Updates a movie only if it belongs to the specified user."""
 
         movie = Movie.query.filter_by(
-            id=movie_id
+            id=movie_id,
+            user_id=user_id
         ).first()
 
         if movie:
             movie.name = new_title
             db.session.commit()
 
-    def delete_movie(self, movie_id):
-        """Deletes a specific movie from the database."""
+    def delete_movie(self, user_id, movie_id):
+        """Deletes a movie only if it belongs to the specified user."""
 
         movie = Movie.query.filter_by(
-            id=movie_id
+            id=movie_id,
+            user_id=user_id
         ).first()
 
         if movie:
