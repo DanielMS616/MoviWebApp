@@ -1,10 +1,15 @@
 import os
 
 import requests
+from dotenv import load_dotenv
 from flask import Flask, redirect, render_template, request, url_for
 
 from data_manager import DataManager
 from models import db, Movie
+
+
+# Loads environment variables from the .env file.
+load_dotenv()
 
 
 # Creates the Flask application.
