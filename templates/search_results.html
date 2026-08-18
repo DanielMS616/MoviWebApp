@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="search-results-page">
+        <a
+            href="{{ url_for(
+                'get_movies',
+                user_id=user_id
+            ) }}"
+            class="back-link"
+        >
+            ← Back to Favorites
+        </a>
+
+        <header class="search-results-header">
+            <h1>Search Results</h1>
+
+            <p>
+                Results for
+                <strong>{{ query }}</strong>
+            </p>
+        </header>
+
+        {% if search_error %}
+            <p class="search-message">
+                {{ search_error }}
+            </p>
+
+        {% elif search_results %}
+            <p class="search-summary">
+                {{ total_results }} movies found.
+
+                {% if total_results > search_results | length %}
+                    Showing the first
+                    {{ search_results | length }}
+                    results.
+                {% endif %}
+            </p>
+
+            <ul class="search-results">
+                {% for result in search_results %}
+                    <li class="search-result">
+                        <article class="search-result-card">
+                            {% if result.Poster != "N/A" %}
+                                <img
+                                    src="{{ result.Poster }}"
+                                    alt="Poster for {{ result.Title }}"
+                                    class="search-result-poster"
+                                >
+                            {% endif %}
+
+                            <div class="search-result-content">
+                                <h2>{{ result.Title }}</h2>
+
+                                <p>
+                                    <strong>Year:</strong>
+                                    {{ result.Year }}
+                                </p>
+
+                                <form
+                                    action="{{ url_for(
+                                        'add_movie',
+                                        user_id=user_id
+                                    ) }}"
+                                    method="post"
+                                >
+                                    <input
+                                        type="hidden"
+                                        name="imdb_id"
+                                        value="{{ result.imdbID }}"
+                                    >
+
+                                    <button type="submit">
+                                        Add Movie
+                                    </button>
+                                </form>
+                            </div>
+                        </article>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p class="search-message">
+                No movies found.
+            </p>
+        {% endif %}
+
+        <a
+            href="{{ url_for(
+                'get_movies',
+                user_id=user_id
+            ) }}"
+            class="back-link"
+        >
+            ← Back to Favorites
+        </a>
+    </section>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="explore-page">
+        <a
+            href="{{ url_for(
+                'get_movies',
+                user_id=user_id
+            ) }}"
+            class="back-link"
+        >
+            ← Back to Favorites
+        </a>
+
+        <header class="explore-header">
+            <h1>100 Movies to Explore</h1>
+
+            <p>
+                A curated collection of arthouse films,
+                science fiction, AI, hacker culture,
+                cult classics and popular favorites.
+            </p>
+        </header>
+
+        {% if movie_suggestions %}
+            <ul class="movie-suggestions">
+                {% for movie in movie_suggestions %}
+                    <li class="movie-suggestion">
+                        <article class="movie-suggestion-card">
+                            {% if movie.poster_url %}
+                                <img
+                                    src="{{ movie.poster_url }}"
+                                    alt="Poster for {{ movie.title }}"
+                                    class="movie-suggestion-poster"
+                                >
+                            {% endif %}
+
+                            <div class="movie-suggestion-content">
+                                <h2>{{ movie.title }}</h2>
+
+                                <p>
+                                    <strong>Year:</strong>
+                                    {{ movie.year }}
+                                </p>
+
+                                {% if movie.tags %}
+                                    <div class="movie-tags">
+                                        {% for tag in movie.tags %}
+                                            <span class="movie-tag">
+                                                {{ tag }}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                <form
+                                    action="{{ url_for(
+                                        'add_movie',
+                                        user_id=user_id
+                                    ) }}"
+                                    method="post"
+                                >
+                                    <input
+                                        type="hidden"
+                                        name="imdb_id"
+                                        value="{{ movie.imdb_id }}"
+                                    >
+
+                                    <button type="submit">
+                                        Add Movie
+                                    </button>
+                                </form>
+                            </div>
+                        </article>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p>
+                No movie recommendations are available.
+            </p>
+        {% endif %}
+
+        <a
+            href="{{ url_for(
+                'get_movies',
+                user_id=user_id
+            ) }}"
+            class="back-link"
+        >
+            ← Back to Favorites
+        </a>
+    </section>
+{% endblock %}

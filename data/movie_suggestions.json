@@ -1,0 +1,1043 @@
+[
+  {
+    "title": "2001: A Space Odyssey",
+    "year": 1968,
+    "imdb_id": "tt0062622",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjU0NDFkMTQtZWY5OS00MmZhLTg3Y2QtZmJhMzMzMWYyYjc2XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Blade Runner",
+    "year": 1982,
+    "imdb_id": "tt0083658",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOWQ4YTBmNTQtMDYxMC00NGFjLTkwOGQtNzdhNmY1Nzc1MzUxXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "ai"
+    ]
+  },
+  {
+    "title": "Blade Runner 2049",
+    "year": 2017,
+    "imdb_id": "tt1856101",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "ai"
+    ]
+  },
+  {
+    "title": "Alien",
+    "year": 1979,
+    "imdb_id": "tt0078748",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BN2NhMDk2MmEtZDQzOC00MmY5LThhYzAtMDdjZGFjOGZjMjdjXkEyXkFqcGc@._V1_QL75_UX380_CR0,6,380,562_.jpg",
+    "tags": [
+      "sci-fi",
+      "horror"
+    ]
+  },
+  {
+    "title": "Aliens",
+    "year": 1986,
+    "imdb_id": "tt0090605",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZjIyNGJhYzYtN2I1My00OTVhLWEyMzItZTVjNDMzOTVkYWViXkEyXkFqcGc@._V1_QL75_UX380_CR0,6,380,562_.jpg",
+    "tags": [
+      "sci-fi",
+      "action"
+    ]
+  },
+  {
+    "title": "The Matrix",
+    "year": 1999,
+    "imdb_id": "tt0133093",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BN2NmN2VhMTQtMDNiOS00NDlhLTliMjgtODE2ZTY0ODQyNDRhXkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg",
+    "tags": [
+      "sci-fi",
+      "ai",
+      "hacker"
+    ]
+  },
+  {
+    "title": "Ex Machina",
+    "year": 2014,
+    "imdb_id": "tt0470752",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTUxNzc0OTIxMV5BMl5BanBnXkFtZTgwNDI3NzU2NDE@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "ai",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "The Disappearance of Eleanor Rigby: Her",
+    "year": 2013,
+    "imdb_id": "tt3720788",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjIxYTI3NTYtMDJmMC00Yzk0LWFkOGUtODlkMDdkZTFiNTE4XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "ai",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "A.I. Artificial Intelligence",
+    "year": 2001,
+    "imdb_id": "tt0212720",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BODA1YjhhZDctM2Y1ZS00ODkyLWFmMTAtZGY5YWEzNzRjYzA1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "ai"
+    ]
+  },
+  {
+    "title": "Ghost in the Shell",
+    "year": 1995,
+    "imdb_id": "tt0113568",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNzljMjA3MTQtMjM1OS00OGJjLWJiYzctZDRiMTk1NWI5YzQ5XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "ai",
+      "cyberpunk",
+      "anime"
+    ]
+  },
+  {
+    "title": "Akira",
+    "year": 1988,
+    "imdb_id": "tt0094625",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYWUxMGRhZDQtMTBmMi00N2IxLWE5NmYtMDMyMWExODAwNWYzXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "anime"
+    ]
+  },
+  {
+    "title": "Gattaca",
+    "year": 1997,
+    "imdb_id": "tt0119177",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZjQxNTc3YzQtZDA5ZC00MmM5LWE3NGYtMGE0Yjk3MDYwODVlXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "biotech"
+    ]
+  },
+  {
+    "title": "Minority Report",
+    "year": 2002,
+    "imdb_id": "tt0181689",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYTdmNzM3YzItZTRkYS00MTY5LTg4ZmItNjFmNTk2N2Q2NmNlXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "tech"
+    ]
+  },
+  {
+    "title": "Moon",
+    "year": 2009,
+    "imdb_id": "tt1182345",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTgzODgyNTQwOV5BMl5BanBnXkFtZTcwNzc0NTc0Mg@@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "ai"
+    ]
+  },
+  {
+    "title": "Arrival",
+    "year": 2016,
+    "imdb_id": "tt2543164",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTExMzU0ODcxNDheQTJeQWpwZ15BbWU4MDE1OTI4MzAy._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Annihilation",
+    "year": 2018,
+    "imdb_id": "tt2798920",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTk2Mjc2NzYxNl5BMl5BanBnXkFtZTgwMTA2OTA1NDM@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Children of Men",
+    "year": 2006,
+    "imdb_id": "tt0206634",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMDNkNmNiYzYtYWY0YS00NWEwLTgwMWUtYjM0M2E4Nzk3MzhmXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "dystopia"
+    ]
+  },
+  {
+    "title": "District 9",
+    "year": 2009,
+    "imdb_id": "tt1136608",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTM4OTI1OTM5NF5BMl5BanBnXkFtZTcwMzk5MTU1Mg@@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "social"
+    ]
+  },
+  {
+    "title": "Solaris",
+    "year": 1972,
+    "imdb_id": "tt0069293",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYTYyMjU4MjItYzZkNy00NmIyLTg1ZGEtYTY5ZTEyM2U2NDM2XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Stalker",
+    "year": 1979,
+    "imdb_id": "tt0079944",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMDIzMDRiYjgtM2U1Yy00MjlhLTliODMtM2E5NDI5Njc3YmZkXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Under the Skin",
+    "year": 2013,
+    "imdb_id": "tt1441395",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTU1MDEwMDg4Nl5BMl5BanBnXkFtZTgwOTk3NTcxMTE@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Coherence",
+    "year": 2013,
+    "imdb_id": "tt2866360",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNzQ3ODUzNDY2M15BMl5BanBnXkFtZTgwNzg0ODY2MTE@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "indie"
+    ]
+  },
+  {
+    "title": "Primer",
+    "year": 2004,
+    "imdb_id": "tt0390384",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZTRmZDlmNzUtNjM2NS00MjBjLWFmNjQtMTczMWNkZTdiOGZmXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "nerd",
+      "indie"
+    ]
+  },
+  {
+    "title": "Pi",
+    "year": 1998,
+    "imdb_id": "tt0138704",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNWExNjZlZGQtYjIxMS00ZTAyLTkzMjktOWVlMDg0NTM2OTUxXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "nerd",
+      "math"
+    ]
+  },
+  {
+    "title": "Brazil",
+    "year": 1985,
+    "imdb_id": "tt0088846",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjI1MTAzNmYtYzQ3Zi00ZWE0LWJiZmQtY2UwZWU3ZTE4OGQ3XkEyXkFqcGc@._V1_QL75_UY562_CR3,0,380,562_.jpg",
+    "tags": [
+      "sci-fi",
+      "dystopia",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Dark City",
+    "year": 1998,
+    "imdb_id": "tt0118929",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTFhMmE1YzgtNTFhYS00MTRlLWI3ZDMtMWJkMTBmOWMzOTk5XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "noir"
+    ]
+  },
+  {
+    "title": "eXistenZ",
+    "year": 1999,
+    "imdb_id": "tt0120907",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZjk3MGRhN2EtN2IyYi00NjFkLWFmNTUtNWI3MzZiYjI2ZjRkXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "virtual-reality"
+    ]
+  },
+  {
+    "title": "Upgrade",
+    "year": 2018,
+    "imdb_id": "tt6499752",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjI0NzcyMjM5Ml5BMl5BanBnXkFtZTgwMzk2NzAyNTM@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "ai",
+      "cyberpunk"
+    ]
+  },
+  {
+    "title": "RoboCop",
+    "year": 1987,
+    "imdb_id": "tt0093870",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZWM1YzRhODktZDE1MC00NzBlLTk0NGMtOGNhZDQyMmJiZGFiXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "satire"
+    ]
+  },
+  {
+    "title": "Monsters, Inc.",
+    "year": 2001,
+    "imdb_id": "tt0198781",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTY1NTI0ODUyOF5BMl5BanBnXkFtZTgwNTEyNjQ0MDE@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+    "tags": [
+      "animation",
+      "comedy",
+      "popular"
+    ]
+  },
+  {
+    "title": "WarGames",
+    "year": 1983,
+    "imdb_id": "tt0086567",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMmM5MDlmZWUtYTE1Mi00M2JiLTk1NzYtMTg0NTdlMzM2N2RkXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "nerd",
+      "tech"
+    ]
+  },
+  {
+    "title": "Sneakers",
+    "year": 1992,
+    "imdb_id": "tt0105435",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMGEwMmZlMjgtNDc0MS00NmY1LTljMzQtMzBmNmE0OWRkNjViXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "tech"
+    ]
+  },
+  {
+    "title": "Hackers",
+    "year": 1995,
+    "imdb_id": "tt0113243",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOGZkZTc2ZjItNzIzMS00ODRlLTliNjgtZjRmNzM2NjkzZTU1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "cult"
+    ]
+  },
+  {
+    "title": "Who Am I",
+    "year": 2014,
+    "imdb_id": "tt3042408",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZDFmNDY0NWUtMzZhYS00ZDk4LTg0MWItMTg5MDliZWExNmI4XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "german"
+    ]
+  },
+  {
+    "title": "Blackhat",
+    "year": 2015,
+    "imdb_id": "tt2717822",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTg1NDUyMzk5NV5BMl5BanBnXkFtZTgwOTk1NzUxMzE@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "thriller"
+    ]
+  },
+  {
+    "title": "The Social Network",
+    "year": 2010,
+    "imdb_id": "tt1285016",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjlkNTE5ZTUtNGEwNy00MGVhLThmZjMtZjU1NDE5Zjk1NDZkXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "programming",
+      "tech",
+      "drama"
+    ]
+  },
+  {
+    "title": "Steve Jobs",
+    "year": 2015,
+    "imdb_id": "tt2080374",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjE0NTA2MTEwOV5BMl5BanBnXkFtZTgwNzg4NzU2NjE@._V1_QL75_UX380_CR0,20,380,562_.jpg",
+    "tags": [
+      "tech",
+      "biography"
+    ]
+  },
+  {
+    "title": "The Imitation Game",
+    "year": 2014,
+    "imdb_id": "tt2084970",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjI3NjY1Mjg3MV5BMl5BanBnXkFtZTgwMzk5MDQ3MjE@._V1_SX300.jpg",
+    "tags": [
+      "nerd",
+      "computing",
+      "history"
+    ]
+  },
+  {
+    "title": "Tron",
+    "year": 1982,
+    "imdb_id": "tt0084827",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTA4Y2VjOWEtMWQ5MS00YWU5LTkxZTMtNzVmMDYyNWFiODU5XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "nerd",
+      "computing"
+    ]
+  },
+  {
+    "title": "Tron: Legacy",
+    "year": 2010,
+    "imdb_id": "tt1104001",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTk4NTk4MTk1OF5BMl5BanBnXkFtZTcwNTE2MDIwNA@@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+    "tags": [
+      "sci-fi",
+      "nerd",
+      "computing"
+    ]
+  },
+  {
+    "title": "Antitrust",
+    "year": 2001,
+    "imdb_id": "tt0218817",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjdkY2NjNTYtZmQ3OC00ZWE2LTk3Y2UtM2M1ODFhOGEzZjE0XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "programming",
+      "thriller"
+    ]
+  },
+  {
+    "title": "Source Code",
+    "year": 2011,
+    "imdb_id": "tt0945513",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTY0MTc3MzMzNV5BMl5BanBnXkFtZTcwNDE4MjE0NA@@._V1_SX300.jpg",
+    "tags": [
+      "sci-fi",
+      "nerd"
+    ]
+  },
+  {
+    "title": "Citizenfour",
+    "year": 2014,
+    "imdb_id": "tt4044364",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTc0MTM0MTA5MF5BMl5BanBnXkFtZTgwNzEwODEwMzE@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "documentary",
+      "surveillance"
+    ]
+  },
+  {
+    "title": "Snowden",
+    "year": 2016,
+    "imdb_id": "tt3774114",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTg2MzYzNzgzOF5BMl5BanBnXkFtZTgwOTg4NzQ4OTE@._V1_SX300.jpg",
+    "tags": [
+      "hacker",
+      "surveillance",
+      "biography"
+    ]
+  },
+  {
+    "title": "The Conversation",
+    "year": 1974,
+    "imdb_id": "tt0071360",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOTY4OTVmMzgtNTBkYi00NjI1LWIzOWItNGIwNTM1ZTEzMzc5XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "surveillance",
+      "arthouse",
+      "thriller"
+    ]
+  },
+  {
+    "title": "Mulholland Drive",
+    "year": 2001,
+    "imdb_id": "tt0166924",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjliY2UwMjQtYjVlNi00NzExLTg1MDMtMjE2OTYwYjI0NTcxXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Blue Velvet",
+    "year": 1986,
+    "imdb_id": "tt0090756",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNzkwZGUyYjQtM2QyOC00MTBjLWE0NGYtMTZmOGM5MjI0Mzg0XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Eraserhead",
+    "year": 1977,
+    "imdb_id": "tt0074486",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNGYxNzZkYzAtMDExMS00MzE1LTg5ZGItMTgzMzJhZWMyNTBjXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Lost Highway",
+    "year": 1997,
+    "imdb_id": "tt0116922",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjcyNmM2ODktYzk0Mi00Njk0LTljZGMtNGZhMzI4NmY1NzA1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Persona",
+    "year": 1966,
+    "imdb_id": "tt0060827",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYTRhNzkzMDktZDNlNi00MDIwLWFiNjAtNTlmYjZjYWZlMTEzXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "The Seventh Seal",
+    "year": 1957,
+    "imdb_id": "tt0050976",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZDlmYTkzOWUtODQ0MS00MmM4LWE3ZjMtYTEwNGUwMmJkYzIxXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "Wild Strawberries",
+    "year": 1957,
+    "imdb_id": "tt0050986",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZWQ5MDllM2EtZWRmNS00MmZiLWI4ZWQtMjRiY2Q5MTAxODY4XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "La Dolce Vita",
+    "year": 1960,
+    "imdb_id": "tt0053779",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTkxMjQ4NzU5N15BMl5BanBnXkFtZTgwMTkwODkzMTE@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "Shrek",
+    "year": 2001,
+    "imdb_id": "tt0126029",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BN2FkMTRkNTUtYTI0NC00ZjI4LWI5MzUtMDFmOGY0NmU2OGY1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "animation",
+      "comedy",
+      "popular"
+    ]
+  },
+  {
+    "title": "The 400 Blows",
+    "year": 1959,
+    "imdb_id": "tt0053198",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOTU3YTM0YzQtMmFlOS00OTIxLWFmZjctMDJkOGQxNTVhODM3XkEyXkFqcGc@._V1_QL75_UY562_CR22,0,380,562_.jpg",
+    "tags": [
+      "arthouse",
+      "french-new-wave"
+    ]
+  },
+  {
+    "title": "Paris, Texas",
+    "year": 1984,
+    "imdb_id": "tt0087884",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYWY5YzE4YmUtZWFhMS00YjYxLWI5ZGUtNDEyNmMzNDVjMGEwXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "road-movie"
+    ]
+  },
+  {
+    "title": "Wings of Desire",
+    "year": 1987,
+    "imdb_id": "tt0093191",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYTUwY2EyMDktMGI0Ny00MDNlLWE0ODMtZWIwOGNhNmY1OWIwXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "The Double Life of Véronique",
+    "year": 1991,
+    "imdb_id": "tt0101765",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZjE1MjAxMjgtMTRjMC00YTFjLThhMzgtNzdlODZiZjA0MWMxXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "european"
+    ]
+  },
+  {
+    "title": "Three Colors: Blue",
+    "year": 1993,
+    "imdb_id": "tt0108394",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNWMxNWE2NGYtMzYwOS00NmJhLTgwNjAtNGM3ODIwNjU5MTZiXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "european"
+    ]
+  },
+  {
+    "title": "Three Colors: Red",
+    "year": 1994,
+    "imdb_id": "tt0111495",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTQ0YTQyYzItNGEzMi00NmI4LWJkOTMtOWMyMjAwMWEzYTZhXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "european"
+    ]
+  },
+  {
+    "title": "In the Mood for Love",
+    "year": 2000,
+    "imdb_id": "tt0118694",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BN2Q4NjllMDgtOTk2Zi00YzM1LWJmOTMtNmRiZDgyZGJmMjQzXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "romance"
+    ]
+  },
+  {
+    "title": "Chungking Express",
+    "year": 1994,
+    "imdb_id": "tt0109424",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNDQ4ZmYxODctZDVlZC00OTcxLWJjOGItZjRlMzk4MDA1Yjg1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "romance"
+    ]
+  },
+  {
+    "title": "Yi Yi",
+    "year": 2000,
+    "imdb_id": "tt0244316",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNTAyMDQ5Y2MtZDk0NC00N2IyLWE5OTgtZjJkZWNlMDBhMDhlXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "drama"
+    ]
+  },
+  {
+    "title": "Oldboy",
+    "year": 2003,
+    "imdb_id": "tt0364569",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTAwNzNjYWItZmI0Ni00ZTcyLWIwNWMtZjlmNGMxZTEyYTJmXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Burning",
+    "year": 2018,
+    "imdb_id": "tt7282468",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZWU3YzgzMTgtOTIwYi00MmNkLWExYWEtZTEyOTAzYzEwM2Q2XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Parasite",
+    "year": 2019,
+    "imdb_id": "tt6751668",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYjk1Y2U4MjQtY2ZiNS00OWQyLWI3MmYtZWUwNmRjYWRiNWNhXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Memories of Murder",
+    "year": 2003,
+    "imdb_id": "tt0353969",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYmRjOWE5NmMtYTdkYS00ODFlLWJiMTMtYzE2NDZlZjlkZDQ0XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "crime",
+      "korean"
+    ]
+  },
+  {
+    "title": "Drive My Car",
+    "year": 2021,
+    "imdb_id": "tt14039582",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOGE5ZWRhYjYtNzVkMS00ZGU3LTg2MTMtODYyMmJlMDMyZjU0XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "japanese"
+    ]
+  },
+  {
+    "title": "The Handmaiden",
+    "year": 2016,
+    "imdb_id": "tt4016934",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOTllZDI1OGItOGUxNS00OGZhLWIzMjAtYzllZTY1YTA0ZmYwXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Shoplifters",
+    "year": 2018,
+    "imdb_id": "tt8075192",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjY2NGZlZDUtMDUwMi00YTUxLTljNzEtZTE3YjAyNTQyNzU5XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "japanese"
+    ]
+  },
+  {
+    "title": "A Separation",
+    "year": 2011,
+    "imdb_id": "tt1832382",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMDM0ZWRmMzctM2M5ZS00ZjU0LWIxN2MtNWNlNGY1ZDhjMDVhXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "iranian"
+    ]
+  },
+  {
+    "title": "The Hunt",
+    "year": 2012,
+    "imdb_id": "tt2106476",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTg2NDg3ODg4NF5BMl5BanBnXkFtZTcwNzk3NTc3Nw@@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "danish"
+    ]
+  },
+  {
+    "title": "Another Round",
+    "year": 2020,
+    "imdb_id": "tt10288566",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjYxN2EwYjUtNzdiOS00NTgwLTgwNzMtZmE1NGMzYTYxNzBjXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "danish"
+    ]
+  },
+  {
+    "title": "Dogtooth",
+    "year": 2009,
+    "imdb_id": "tt1379182",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjIyOTkyMDE5N15BMl5BanBnXkFtZTcwNjIwNzQwMw@@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "greek-weird-wave"
+    ]
+  },
+  {
+    "title": "The Lobster",
+    "year": 2015,
+    "imdb_id": "tt3464902",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNDQ1NDE5NzQ1NF5BMl5BanBnXkFtZTgwNzA5OTM2NTE@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "satire"
+    ]
+  },
+  {
+    "title": "The Killing of a Sacred Deer",
+    "year": 2017,
+    "imdb_id": "tt5715874",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjU4NDcwOTA2NF5BMl5BanBnXkFtZTgwMjE2OTg4MzI@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "thriller"
+    ]
+  },
+  {
+    "title": "The Worst Person in the World",
+    "year": 2021,
+    "imdb_id": "tt10370710",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BZGEyYzBiYmItZDM4OC00NTdmLWJlYzctODdiM2E2MjZmYTU2XkEyXkFqcGc@._V1_QL75_UY562_CR9,0,380,562_.jpg",
+    "tags": [
+      "arthouse",
+      "norwegian"
+    ]
+  },
+  {
+    "title": "The Zone of Interest",
+    "year": 2023,
+    "imdb_id": "tt7160372",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjk4MTQ3MGEtZmI4OS00N2NhLWI5ZjgtYWE5ZWVkZGExYTQ1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "historical"
+    ]
+  },
+  {
+    "title": "Shrek 2",
+    "year": 2004,
+    "imdb_id": "tt0298148",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMzNmNjQ1NmUtNzhiZS00YWE2LTg4N2ItZTA2ODdmOTMwOTQ1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "animation",
+      "comedy",
+      "popular"
+    ]
+  },
+  {
+    "title": "Run Lola Run",
+    "year": 1998,
+    "imdb_id": "tt0130827",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMzA0NDdiNDgtNjI4Ny00OTc0LTg3NGMtZDBlNmI1ZGUxYTg2XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "Victoria",
+    "year": 2015,
+    "imdb_id": "tt4226388",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTc5NzQzNjk2NF5BMl5BanBnXkFtZTgwODU0MjI5NjE@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "Toni Erdmann",
+    "year": 2016,
+    "imdb_id": "tt4048272",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BODNiNmE5OWMtNDAxMy00YTQzLThjMGItMTAwOTNlNGM2ZDlhXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "Mulan",
+    "year": 1998,
+    "imdb_id": "tt0120762",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYzU0ZTQxZDktOGY0Yy00NjdiLTllNDItMTMzMjI1YjMyYjRhXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "animation",
+      "adventure",
+      "popular"
+    ]
+  },
+  {
+    "title": "Amélie",
+    "year": 2001,
+    "imdb_id": "tt0211915",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BOTNmYzY0MWQtZGZmNy00Y2Y4LWFmMDQtMTZjYTdiYzEwZGQ2XkEyXkFqcGc@._V1_QL75_UX380_CR0,4,380,562_.jpg",
+    "tags": [
+      "arthouse",
+      "romance",
+      "popular"
+    ]
+  },
+  {
+    "title": "Finding Nemo",
+    "year": 2003,
+    "imdb_id": "tt0266543",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTc5NjExNTA5OV5BMl5BanBnXkFtZTYwMTQ0ODY2._V1_SX300.jpg",
+    "tags": [
+      "animation",
+      "adventure",
+      "popular"
+    ]
+  },
+  {
+    "title": "Eternal Sunshine of the Spotless Mind",
+    "year": 2004,
+    "imdb_id": "tt0338013",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTY4NzcwODg3Nl5BMl5BanBnXkFtZTcwNTEwOTMyMw@@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "sci-fi",
+      "romance"
+    ]
+  },
+  {
+    "title": "Being John Malkovich",
+    "year": 1999,
+    "imdb_id": "tt0120601",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNDExODk1MTktNzRiYS00MWEyLTgyOWItYTI1OWY4NzI1NDM2XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "surreal",
+      "comedy"
+    ]
+  },
+  {
+    "title": "Adaptation.",
+    "year": 2002,
+    "imdb_id": "tt0268126",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMmQ1MWMxZjEtNmNmYi00ZGFhLWExZDItODcwNzlmZjg0YzNlXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "meta",
+      "comedy"
+    ]
+  },
+  {
+    "title": "Synecdoche, New York",
+    "year": 2008,
+    "imdb_id": "tt0383028",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjA0MjIyOTI3MF5BMl5BanBnXkFtZTcwODM5NTY5MQ@@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Holy Motors",
+    "year": 2012,
+    "imdb_id": "tt2076220",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYTBiZmJjN2YtMzA4NS00MzRlLWEwMDEtM2NlYTE4YTVmNTA1XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "The Godfather",
+    "year": 1972,
+    "imdb_id": "tt0068646",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNGEwYjgwOGQtYjg5ZS00Njc1LTk2ZGEtM2QwZWQ2NjdhZTE5XkEyXkFqcGc@._V1_QL75_UY562_CR8,0,380,562_.jpg",
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "GoodFellas",
+    "year": 1990,
+    "imdb_id": "tt0099685",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BN2E5NzI2ZGMtY2VjNi00YTRjLWI1MDUtZGY5OWU1MWJjZjRjXkEyXkFqcGc@._V1_QL75_UX380_CR0,3,380,562_.jpg",
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "Pulp Fiction",
+    "year": 1994,
+    "imdb_id": "tt0110912",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BYTViYTE3ZGQtNDBlMC00ZTAyLTkyODMtZGRiZDg0MjA2YThkXkEyXkFqcGc@._V1_QL75_UY562_CR3,0,380,562_.jpg",
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "The Big Lebowski",
+    "year": 1998,
+    "imdb_id": "tt0118715",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BY2E3OWQ5OWYtYTRkMC00NjVjLWIzZDQtNmRmM2ZiYTIyYmYxXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "classic",
+      "comedy",
+      "cult"
+    ]
+  },
+  {
+    "title": "Heat",
+    "year": 1995,
+    "imdb_id": "tt0113277",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMTkxYjU1OTMtYWViZC00ZjAzLWI3MDktZGQ2N2VmMjVjNDRlXkEyXkFqcGc@._V1_QL75_UY562_CR6,0,380,562_.jpg",
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "No Country for Old Men",
+    "year": 2007,
+    "imdb_id": "tt0477348",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMjA5Njk3MjM4OV5BMl5BanBnXkFtZTcwMTc5MTE1MQ@@._V1_SX300.jpg",
+    "tags": [
+      "classic",
+      "thriller"
+    ]
+  },
+  {
+    "title": "Fargo",
+    "year": 1996,
+    "imdb_id": "tt0116282",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BNjg4MWE0MjEtODFhNy00MjA5LTg5ODktMzgwNWFmZTAwNjBlXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "classic",
+      "crime",
+      "comedy"
+    ]
+  },
+  {
+    "title": "Whiplash",
+    "year": 2014,
+    "imdb_id": "tt2582802",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMDFjOWFkYzktYzhhMC00NmYyLTkwY2EtYjViMDhmNzg0OGFkXkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "popular",
+      "drama",
+      "music"
+    ]
+  },
+  {
+    "title": "The Grand Budapest Hotel",
+    "year": 2014,
+    "imdb_id": "tt2278388",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_QL75_UX380_CR0,0,380,562_.jpg",
+    "tags": [
+      "popular",
+      "comedy",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Finding Dory",
+    "year": 2016,
+    "imdb_id": "tt2277860",
+    "poster_url": "https://m.media-amazon.com/images/M/MV5BY2VlYWJjMGMtYjcwZC00MDE2LThmMDItYjVlMzNhYzBhYTk5XkEyXkFqcGc@._V1_SX300.jpg",
+    "tags": [
+      "animation",
+      "adventure",
+      "popular"
+    ]
+  }
+]

@@ -1,0 +1,844 @@
+[
+  {
+    "title": "2001: A Space Odyssey",
+    "year": 1968,
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Blade Runner",
+    "year": 1982,
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "ai"
+    ]
+  },
+  {
+    "title": "Blade Runner 2049",
+    "year": 2017,
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "ai"
+    ]
+  },
+  {
+    "title": "Alien",
+    "year": 1979,
+    "tags": [
+      "sci-fi",
+      "horror"
+    ]
+  },
+  {
+    "title": "Aliens",
+    "year": 1986,
+    "tags": [
+      "sci-fi",
+      "action"
+    ]
+  },
+  {
+    "title": "The Matrix",
+    "year": 1999,
+    "tags": [
+      "sci-fi",
+      "ai",
+      "hacker"
+    ]
+  },
+  {
+    "title": "Ex Machina",
+    "year": 2014,
+    "tags": [
+      "sci-fi",
+      "ai",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Her",
+    "year": 2013,
+    "tags": [
+      "sci-fi",
+      "ai",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "A.I. Artificial Intelligence",
+    "year": 2001,
+    "tags": [
+      "sci-fi",
+      "ai"
+    ]
+  },
+  {
+    "title": "Ghost in the Shell",
+    "year": 1995,
+    "tags": [
+      "sci-fi",
+      "ai",
+      "cyberpunk",
+      "anime"
+    ]
+  },
+  {
+    "title": "Akira",
+    "year": 1988,
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "anime"
+    ]
+  },
+  {
+    "title": "Gattaca",
+    "year": 1997,
+    "tags": [
+      "sci-fi",
+      "biotech"
+    ]
+  },
+  {
+    "title": "Minority Report",
+    "year": 2002,
+    "tags": [
+      "sci-fi",
+      "tech"
+    ]
+  },
+  {
+    "title": "Moon",
+    "year": 2009,
+    "tags": [
+      "sci-fi",
+      "ai"
+    ]
+  },
+  {
+    "title": "Arrival",
+    "year": 2016,
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Annihilation",
+    "year": 2018,
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Children of Men",
+    "year": 2006,
+    "tags": [
+      "sci-fi",
+      "dystopia"
+    ]
+  },
+  {
+    "title": "District 9",
+    "year": 2009,
+    "tags": [
+      "sci-fi",
+      "social"
+    ]
+  },
+  {
+    "title": "Solaris",
+    "year": 1972,
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Stalker",
+    "year": 1979,
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Under the Skin",
+    "year": 2013,
+    "tags": [
+      "sci-fi",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Coherence",
+    "year": 2013,
+    "tags": [
+      "sci-fi",
+      "indie"
+    ]
+  },
+  {
+    "title": "Primer",
+    "year": 2004,
+    "tags": [
+      "sci-fi",
+      "nerd",
+      "indie"
+    ]
+  },
+  {
+    "title": "Pi",
+    "year": 1998,
+    "tags": [
+      "arthouse",
+      "nerd",
+      "math"
+    ]
+  },
+  {
+    "title": "Brazil",
+    "year": 1985,
+    "tags": [
+      "sci-fi",
+      "dystopia",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Dark City",
+    "year": 1998,
+    "tags": [
+      "sci-fi",
+      "noir"
+    ]
+  },
+  {
+    "title": "eXistenZ",
+    "year": 1999,
+    "tags": [
+      "sci-fi",
+      "virtual-reality"
+    ]
+  },
+  {
+    "title": "Upgrade",
+    "year": 2018,
+    "tags": [
+      "sci-fi",
+      "ai",
+      "cyberpunk"
+    ]
+  },
+  {
+    "title": "RoboCop",
+    "year": 1987,
+    "tags": [
+      "sci-fi",
+      "cyberpunk",
+      "satire"
+    ]
+  },
+  {
+    "title": "Monsters, Inc.",
+    "year": 2001,
+    "tags": [
+      "animation",
+      "comedy",
+      "popular"
+    ]
+  },
+  {
+    "title": "WarGames",
+    "year": 1983,
+    "tags": [
+      "hacker",
+      "nerd",
+      "tech"
+    ]
+  },
+  {
+    "title": "Sneakers",
+    "year": 1992,
+    "tags": [
+      "hacker",
+      "tech"
+    ]
+  },
+  {
+    "title": "Hackers",
+    "year": 1995,
+    "tags": [
+      "hacker",
+      "cult"
+    ]
+  },
+  {
+    "title": "Who Am I",
+    "year": 2014,
+    "tags": [
+      "hacker",
+      "german"
+    ]
+  },
+  {
+    "title": "Blackhat",
+    "year": 2015,
+    "tags": [
+      "hacker",
+      "thriller"
+    ]
+  },
+  {
+    "title": "The Social Network",
+    "year": 2010,
+    "tags": [
+      "programming",
+      "tech",
+      "drama"
+    ]
+  },
+  {
+    "title": "Steve Jobs",
+    "year": 2015,
+    "tags": [
+      "tech",
+      "biography"
+    ]
+  },
+  {
+    "title": "The Imitation Game",
+    "year": 2014,
+    "tags": [
+      "nerd",
+      "computing",
+      "history"
+    ]
+  },
+  {
+    "title": "TRON",
+    "year": 1982,
+    "tags": [
+      "sci-fi",
+      "nerd",
+      "computing"
+    ]
+  },
+  {
+    "title": "TRON: Legacy",
+    "year": 2010,
+    "tags": [
+      "sci-fi",
+      "nerd",
+      "computing"
+    ]
+  },
+  {
+    "title": "Antitrust",
+    "year": 2001,
+    "tags": [
+      "hacker",
+      "programming",
+      "thriller"
+    ]
+  },
+  {
+    "title": "Source Code",
+    "year": 2011,
+    "tags": [
+      "sci-fi",
+      "nerd"
+    ]
+  },
+  {
+    "title": "Citizenfour",
+    "year": 2014,
+    "tags": [
+      "hacker",
+      "documentary",
+      "surveillance"
+    ]
+  },
+  {
+    "title": "Snowden",
+    "year": 2016,
+    "tags": [
+      "hacker",
+      "surveillance",
+      "biography"
+    ]
+  },
+  {
+    "title": "The Conversation",
+    "year": 1974,
+    "tags": [
+      "surveillance",
+      "arthouse",
+      "thriller"
+    ]
+  },
+  {
+    "title": "Mulholland Drive",
+    "year": 2001,
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Blue Velvet",
+    "year": 1986,
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Eraserhead",
+    "year": 1977,
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Lost Highway",
+    "year": 1997,
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Persona",
+    "year": 1966,
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "The Seventh Seal",
+    "year": 1957,
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "Wild Strawberries",
+    "year": 1957,
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "La Dolce Vita",
+    "year": 1960,
+    "tags": [
+      "arthouse",
+      "classic"
+    ]
+  },
+  {
+    "title": "Shrek",
+    "year": 2001,
+    "tags": [
+      "animation",
+      "comedy",
+      "popular"
+    ]
+  },
+  {
+    "title": "The 400 Blows",
+    "year": 1959,
+    "tags": [
+      "arthouse",
+      "french-new-wave"
+    ]
+  },
+  {
+    "title": "Paris, Texas",
+    "year": 1984,
+    "tags": [
+      "arthouse",
+      "road-movie"
+    ]
+  },
+  {
+    "title": "Wings of Desire",
+    "year": 1987,
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "The Double Life of Véronique",
+    "year": 1991,
+    "tags": [
+      "arthouse",
+      "european"
+    ]
+  },
+  {
+    "title": "Three Colors: Blue",
+    "year": 1993,
+    "tags": [
+      "arthouse",
+      "european"
+    ]
+  },
+  {
+    "title": "Three Colors: Red",
+    "year": 1994,
+    "tags": [
+      "arthouse",
+      "european"
+    ]
+  },
+  {
+    "title": "In the Mood for Love",
+    "year": 2000,
+    "tags": [
+      "arthouse",
+      "romance"
+    ]
+  },
+  {
+    "title": "Chungking Express",
+    "year": 1994,
+    "tags": [
+      "arthouse",
+      "romance"
+    ]
+  },
+  {
+    "title": "Yi Yi",
+    "year": 2000,
+    "tags": [
+      "arthouse",
+      "drama"
+    ]
+  },
+  {
+    "title": "Oldboy",
+    "year": 2003,
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Burning",
+    "year": 2018,
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Parasite",
+    "year": 2019,
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Memories of Murder",
+    "year": 2003,
+    "tags": [
+      "arthouse",
+      "crime",
+      "korean"
+    ]
+  },
+  {
+    "title": "Drive My Car",
+    "year": 2021,
+    "tags": [
+      "arthouse",
+      "japanese"
+    ]
+  },
+  {
+    "title": "The Handmaiden",
+    "year": 2016,
+    "tags": [
+      "arthouse",
+      "thriller",
+      "korean"
+    ]
+  },
+  {
+    "title": "Shoplifters",
+    "year": 2018,
+    "tags": [
+      "arthouse",
+      "japanese"
+    ]
+  },
+  {
+    "title": "A Separation",
+    "year": 2011,
+    "tags": [
+      "arthouse",
+      "iranian"
+    ]
+  },
+  {
+    "title": "The Hunt",
+    "year": 2012,
+    "tags": [
+      "arthouse",
+      "danish"
+    ]
+  },
+  {
+    "title": "Another Round",
+    "year": 2020,
+    "tags": [
+      "arthouse",
+      "danish"
+    ]
+  },
+  {
+    "title": "Dogtooth",
+    "year": 2009,
+    "tags": [
+      "arthouse",
+      "greek-weird-wave"
+    ]
+  },
+  {
+    "title": "The Lobster",
+    "year": 2015,
+    "tags": [
+      "arthouse",
+      "satire"
+    ]
+  },
+  {
+    "title": "The Killing of a Sacred Deer",
+    "year": 2017,
+    "tags": [
+      "arthouse",
+      "thriller"
+    ]
+  },
+  {
+    "title": "The Worst Person in the World",
+    "year": 2021,
+    "tags": [
+      "arthouse",
+      "norwegian"
+    ]
+  },
+  {
+    "title": "The Zone of Interest",
+    "year": 2023,
+    "tags": [
+      "arthouse",
+      "historical"
+    ]
+  },
+  {
+    "title": "Shrek 2",
+    "year": 2004,
+    "tags": [
+      "animation",
+      "comedy",
+      "popular"
+    ]
+  },
+  {
+    "title": "Run Lola Run",
+    "year": 1998,
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "Victoria",
+    "year": 2015,
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "Toni Erdmann",
+    "year": 2016,
+    "tags": [
+      "arthouse",
+      "german"
+    ]
+  },
+  {
+    "title": "Mulan",
+    "year": 1998,
+    "tags": [
+      "animation",
+      "adventure",
+      "popular"
+    ]
+  },
+  {
+    "title": "Amélie",
+    "year": 2001,
+    "imdb_id": "tt0211915",
+    "tags": [
+        "arthouse",
+        "romance",
+        "popular"
+    ]
+  },
+  {
+    "title": "Finding Nemo",
+    "year": 2003,
+    "tags": [
+      "animation",
+      "adventure",
+      "popular"
+    ]
+  },
+  {
+    "title": "Eternal Sunshine of the Spotless Mind",
+    "year": 2004,
+    "tags": [
+      "arthouse",
+      "sci-fi",
+      "romance"
+    ]
+  },
+  {
+    "title": "Being John Malkovich",
+    "year": 1999,
+    "tags": [
+      "arthouse",
+      "surreal",
+      "comedy"
+    ]
+  },
+  {
+    "title": "Adaptation.",
+    "year": 2002,
+    "tags": [
+      "arthouse",
+      "meta",
+      "comedy"
+    ]
+  },
+  {
+    "title": "Synecdoche, New York",
+    "year": 2008,
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "Holy Motors",
+    "year": 2012,
+    "tags": [
+      "arthouse",
+      "surreal"
+    ]
+  },
+  {
+    "title": "The Godfather",
+    "year": 1972,
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "Goodfellas",
+    "year": 1990,
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "Pulp Fiction",
+    "year": 1994,
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "The Big Lebowski",
+    "year": 1998,
+    "tags": [
+      "classic",
+      "comedy",
+      "cult"
+    ]
+  },
+  {
+    "title": "Heat",
+    "year": 1995,
+    "tags": [
+      "classic",
+      "crime"
+    ]
+  },
+  {
+    "title": "No Country for Old Men",
+    "year": 2007,
+    "tags": [
+      "classic",
+      "thriller"
+    ]
+  },
+  {
+    "title": "Fargo",
+    "year": 1996,
+    "tags": [
+      "classic",
+      "crime",
+      "comedy"
+    ]
+  },
+  {
+    "title": "Whiplash",
+    "year": 2014,
+    "tags": [
+      "popular",
+      "drama",
+      "music"
+    ]
+  },
+  {
+    "title": "The Grand Budapest Hotel",
+    "year": 2014,
+    "tags": [
+      "popular",
+      "comedy",
+      "arthouse"
+    ]
+  },
+  {
+    "title": "Finding Dory",
+    "year": 2016,
+    "tags": [
+      "animation",
+      "adventure",
+      "popular"
+    ]
+  }
+]

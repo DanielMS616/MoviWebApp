@@ -1,4 +1,6 @@
+import json
 import os
+import random
 
 import requests
 from dotenv import load_dotenv
@@ -165,37 +167,32 @@ def get_movies(user_id):
     methods=["GET"]
 )
 def search_movies(user_id):
-    """Searches OMDb for movies matching the user's search query."""
+    """Searches OMDb and displays matching movie results."""
 
     # Search uses GET, so the search term is read from the URL
     # query parameters instead of request.form.
     query = request.args.get("query", "").strip()
 
-    # The page still displays the user's existing favorites together
-    # with possible search results.
-    movies = data_manager.get_movies(user_id)
-
-    # An empty query should not cause an unnecessary OMDb request.
+    # An empty search should simply return the user to the
+    # favorite movie page instead of calling OMDb.
     if not query:
-        return render_template(
-            "movies.html",
-            movies=movies,
-            user_id=user_id
+        return redirect(
+            url_for("get_movies", user_id=user_id)
         )
 
-    # Reads the API key loaded from the .env file.
+    # Reads the OMDb API key loaded from the .env file.
     api_key = os.getenv("OMDB_API_KEY")
 
     if not api_key:
         return "OMDb API key is not configured.", 500
 
     try:
-        # Searches for movies matching the partial title.
+        # Searches OMDb for movies matching the partial title.
         #
-        # "s" performs a search.
+        # "s" performs a title search.
         # "type=movie" excludes series and episodes.
-        # Only page 1 is used because pagination is intentionally
-        # outside the scope of Movie Search v1.
+        # Only the first result page is requested because pagination
+        # is intentionally outside the scope of Movie Search v1.
         response = requests.get(
             "https://www.omdbapi.com/",
             params={
@@ -207,25 +204,23 @@ def search_movies(user_id):
             timeout=10
         )
 
-        # Raises an exception for unsuccessful HTTP status codes.
         response.raise_for_status()
 
-    # Handles connection errors, timeouts and HTTP errors.
+    # Handles connection errors, timeouts and unsuccessful HTTP responses.
     except requests.RequestException as error:
         print(f"OMDb search request failed: {error}")
 
         return "Could not connect to OMDb.", 502
 
-    # Converts the JSON response into a Python dictionary.
+    # Converts the OMDb JSON response into a Python dictionary.
     search_data = response.json()
 
-    # OMDb may return HTTP 200 even when the actual search failed.
-    # Its own Response field therefore also needs to be checked.
+    # OMDb may return HTTP 200 even when the actual search did not
+    # produce usable results.
     if search_data.get("Response") == "False":
         omdb_error = search_data.get("Error", "")
 
-        # MoviWeb translates the external API response into its own
-        # user-facing message.
+        # Very broad search terms receive a more useful MoviWeb message.
         if omdb_error == "Too many results.":
             search_error = (
                 "Too many results. Please refine your search."
@@ -234,8 +229,7 @@ def search_movies(user_id):
             search_error = "No movies found."
 
         return render_template(
-            "movies.html",
-            movies=movies,
+            "search_results.html",
             user_id=user_id,
             query=query,
             search_results=[],
@@ -243,23 +237,59 @@ def search_movies(user_id):
             search_error=search_error
         )
 
-    # Successful OMDb search results are stored inside the "Search" list.
+    # OMDb stores successful search matches inside the "Search" list.
     search_results = search_data.get("Search", [])
 
-    # OMDb returns totalResults as a string.
-    # MoviWeb converts it into an integer for easier comparison.
+    # OMDb returns totalResults as a string, so MoviWeb converts it
+    # into an integer before passing it to the template.
     total_results = int(
         search_data.get("totalResults", 0)
     )
 
     return render_template(
-        "movies.html",
-        movies=movies,
+        "search_results.html",
         user_id=user_id,
         query=query,
         search_results=search_results,
         total_results=total_results,
         search_error=None
+    )
+
+
+@app.route(
+    "/users/<int:user_id>/movies/explore",
+    methods=["GET"]
+)
+def explore_movies(user_id):
+    """Displays MoviWeb's curated movie recommendations."""
+
+    # Builds the absolute path to the local recommendation file.
+    # Using basedir keeps the path independent of the directory
+    # from which the Flask application is started.
+    suggestions_path = os.path.join(
+        basedir,
+        "data",
+        "movie_suggestions.json"
+    )
+
+    # Loads the curated movie collection from the local JSON file.
+    with open(
+        suggestions_path,
+        "r",
+        encoding="utf-8"
+    ) as file:
+        movie_suggestions = json.load(file)
+
+    # Randomizes the order for this page request.
+    # Because the JSON file is loaded fresh for every request,
+    # shuffle() only changes the in-memory list and never modifies
+    # the actual movie_suggestions.json file.
+    random.shuffle(movie_suggestions)
+
+    return render_template(
+        "explore.html",
+        user_id=user_id,
+        movie_suggestions=movie_suggestions
     )
 
 
