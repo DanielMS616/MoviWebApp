@@ -1,15 +1,16 @@
 /*
- * Preserves the user's position around an Add Movie action.
+ * Preserves the user's position around movie actions that reload
+ * the current browsing page.
  *
- * MoviWeb uses the Post/Redirect/Get pattern when a movie is added.
+ * MoviWeb uses the Post/Redirect/Get pattern for movie actions.
  * A normal redirect reloads the page and would therefore lose the
- * exact viewport position of the clicked button.
+ * exact viewport position of the movie the user was working with.
  *
- * Before submitting an Add Movie form, this script stores the vertical
- * position of that movie's action area in sessionStorage.
+ * Before a supported form is submitted, this script stores the
+ * vertical position of the affected movie area in sessionStorage.
  *
- * After the redirected page and its images have loaded, the same movie
- * action area is found again and returned to approximately the same
+ * After the redirected page and its images have loaded, the same
+ * area is found again and returned to approximately the same
  * position inside the browser window.
  */
 
@@ -19,19 +20,26 @@ const movieScrollStorageKey = "moviwebMovieScrollState";
 
 function saveMovieScrollPosition(form) {
     /*
-     * Stores the position of the movie action area before the form
-     * leaves the current page.
+     * Finds the relevant movie area for the submitted form.
+     *
+     * Add Movie forms are located inside a movie-action-area.
+     * Update Movie forms are located inside a complete movie-card.
      */
+    const movieArea = form.closest(
+        ".movie-action-area, .movie-card"
+    );
 
-    const actionArea = form.closest(".movie-action-area");
-
-    if (!actionArea || !actionArea.id) {
+    if (!movieArea || !movieArea.id) {
         return;
     }
 
+    /*
+     * getBoundingClientRect().top measures the element's current
+     * position relative to the top of the visible browser window.
+     */
     const scrollState = {
-        anchorId: actionArea.id,
-        viewportTop: actionArea.getBoundingClientRect().top
+        anchorId: movieArea.id,
+        viewportTop: movieArea.getBoundingClientRect().top
     };
 
     sessionStorage.setItem(
@@ -43,10 +51,9 @@ function saveMovieScrollPosition(form) {
 
 function restoreMovieScrollPosition() {
     /*
-     * Restores the affected movie action area to its previous position
-     * inside the browser viewport after the redirected page has loaded.
+     * Restores the affected movie area to its previous position
+     * inside the browser viewport after the redirected page loads.
      */
-
     const savedState = sessionStorage.getItem(
         movieScrollStorageKey
     );
@@ -67,9 +74,9 @@ function restoreMovieScrollPosition() {
     }
 
     /*
-     * The server adds the movie anchor to redirects caused by movie
-     * actions. This check prevents an old saved position from affecting
-     * an unrelated page load.
+     * Movie-action redirects contain an HTML anchor.
+     * Matching the current URL fragment prevents stale stored
+     * positions from affecting unrelated page loads.
      */
     if (
         window.location.hash
@@ -81,11 +88,11 @@ function restoreMovieScrollPosition() {
         return;
     }
 
-    const actionArea = document.getElementById(
+    const movieArea = document.getElementById(
         scrollState.anchorId
     );
 
-    if (!actionArea) {
+    if (!movieArea) {
         sessionStorage.removeItem(
             movieScrollStorageKey
         );
@@ -94,11 +101,11 @@ function restoreMovieScrollPosition() {
 
     /*
      * The browser may already have moved to the HTML anchor.
-     * We calculate the remaining difference between the current
-     * position and the position the user saw before clicking.
+     * The remaining difference is calculated so that the element
+     * returns to the position it had before the form submission.
      */
     const currentTop = (
-        actionArea.getBoundingClientRect().top
+        movieArea.getBoundingClientRect().top
     );
 
     const positionDifference = (
@@ -112,7 +119,7 @@ function restoreMovieScrollPosition() {
     });
 
     /*
-     * The state is only needed for this single redirect.
+     * The position is needed for only one redirect.
      * Removing it prevents later page loads from reusing stale data.
      */
     sessionStorage.removeItem(
@@ -122,11 +129,12 @@ function restoreMovieScrollPosition() {
 
 
 /*
- * Connects the position-saving behavior to every Add Movie form
- * currently rendered on the page.
+ * Add Movie and Update Movie both reload a page on which the same
+ * movie still exists. Their forms therefore use the same position
+ * preservation mechanism.
  */
 document.querySelectorAll(
-    ".add-movie-form"
+    ".add-movie-form, .update-movie-form"
 ).forEach((form) => {
     form.addEventListener(
         "submit",
@@ -140,8 +148,7 @@ document.querySelectorAll(
  *
  * Movie posters can change the page layout while they are loading.
  * Restoring the position after images have loaded makes the final
- * scroll position more reliable than restoring it immediately when
- * only the HTML structure is available.
+ * scroll position more reliable.
  */
 window.addEventListener(
     "load",

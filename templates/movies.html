@@ -56,7 +56,10 @@
             <ul class="movie-list">
                 {% for movie in movies %}
                     <li class="movie-entry">
-                        <article class="movie-card">
+                        <article
+                            id="favorite-movie-{{ movie.id }}"
+                            class="movie-card"
+                        >
                             {% if movie.poster_url %}
                                 <img
                                     src="{{ movie.poster_url }}"

@@ -759,10 +759,14 @@ def update_movie(user_id, movie_id):
             new_title
         )
 
+    # Returns to the updated favorite movie card.
+    # The HTML anchor also provides a useful fallback if JavaScript
+    # is unavailable.
     return redirect(
         url_for(
             "get_movies",
-            user_id=user_id
+            user_id=user_id,
+            _anchor=f"favorite-movie-{movie_id}"
         )
     )
 
