@@ -8,7 +8,6 @@ class DataManager:
         """Creates a new user and stores it in the database."""
 
         new_user = User(name=name)
-
         db.session.add(new_user)
         db.session.commit()
 
@@ -16,6 +15,44 @@ class DataManager:
         """Returns all users stored in the database."""
 
         return User.query.all()
+
+    def delete_user(self, user_id):
+        """
+        Deletes a user together with all of their favorite movies.
+
+        A user's movies are removed first so that no movie records remain
+        in the database without the user they belong to.
+
+        Returns True if the user was deleted and False if the user
+        could not be found.
+        """
+
+        # Looks up the user before deleting anything.
+        # This avoids running delete operations for a user that does
+        # not exist.
+        user = User.query.filter_by(
+            id=user_id
+        ).first()
+
+        if not user:
+            return False
+
+        # Deletes all favorite movies belonging to this user first.
+        #
+        # The Movie table references User through user_id, so removing
+        # the dependent movie records before the user keeps the database
+        # data consistent.
+        Movie.query.filter_by(
+            user_id=user_id
+        ).delete()
+
+        # Deletes the user itself after their movie records are removed.
+        db.session.delete(user)
+
+        # Both delete operations are committed together.
+        db.session.commit()
+
+        return True
 
     def get_movies(self, user_id):
         """Returns all movies belonging to a specific user."""

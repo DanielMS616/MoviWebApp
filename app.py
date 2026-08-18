@@ -258,6 +258,25 @@ def create_user():
 
 
 @app.route(
+    "/users/<int:user_id>/delete",
+    methods=["POST"]
+)
+def delete_user(user_id):
+    """Deletes a user together with all of their favorite movies."""
+
+    # The DataManager handles both parts of the delete operation:
+    # first the user's favorite movies and then the user itself.
+    data_manager.delete_user(user_id)
+
+    # Redirects back to the user overview after the delete request.
+    # Using POST prevents a user from being deleted simply by opening
+    # or following a normal URL.
+    return redirect(
+        url_for("index")
+    )
+
+
+@app.route(
     "/users/<int:user_id>/movies",
     methods=["GET"]
 )
