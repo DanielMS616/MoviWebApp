@@ -25,10 +25,32 @@ class DataManager:
         ).all()
 
     def add_movie(self, movie):
-        """Stores a Movie object in the database."""
+        """
+        Adds a movie to a user's favorites.
+
+        Before saving, the method checks whether the same user has already
+        added a movie with the same IMDb ID. This prevents normal duplicate
+        entries before the database constraint needs to reject them.
+
+        Returns True if the movie was added and False if it already exists.
+        """
+
+        # The IMDb ID identifies the selected movie.
+        # Together with the user ID, it identifies one favorite entry.
+        existing_movie = Movie.query.filter_by(
+            user_id=movie.user_id,
+            imdb_id=movie.imdb_id
+        ).first()
+
+        # If the combination already exists, the movie must not be added
+        # again for the same user.
+        if existing_movie:
+            return False
 
         db.session.add(movie)
         db.session.commit()
+
+        return True
 
     def update_movie(self, user_id, movie_id, new_title):
         """Updates a movie only if it belongs to the specified user."""
