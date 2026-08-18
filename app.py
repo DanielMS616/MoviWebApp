@@ -4,15 +4,23 @@ import random
 
 import requests
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request, url_for
+from flask import (
+    Flask,
+    flash,
+    redirect,
+    render_template,
+    request,
+    session,
+    url_for
+)
 
 from data_manager import DataManager
 from models import db, Movie
 
 
 # Loads environment variables from the local .env file.
-# This keeps sensitive values such as the OMDb API key
-# outside of the source code.
+# This keeps sensitive values such as the OMDb API key and Flask's
+# secret key outside of the source code.
 load_dotenv()
 
 
@@ -20,9 +28,24 @@ load_dotenv()
 app = Flask(__name__)
 
 
+# Loads Flask's secret key from the environment.
+# Flask uses this key to securely sign session data.
+# Flash messages and the temporary Explore shuffle seed are stored
+# in the session and therefore require a secret key.
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+
+
+# The application cannot safely use sessions or flash messages
+# without a configured secret key.
+if not app.config["SECRET_KEY"]:
+    raise RuntimeError(
+        "SECRET_KEY is not configured."
+    )
+
+
 # Determines the absolute path of the project directory.
-# This makes the SQLite database path independent of the directory
-# from which the application is started.
+# This makes file paths independent of the directory from which
+# the Flask application is started.
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -42,6 +65,7 @@ db.init_app(app)
 
 
 # Creates the object responsible for database CRUD operations.
+# Database queries remain separated from the Flask route logic.
 data_manager = DataManager()
 
 
@@ -58,7 +82,7 @@ def normalize_omdb_value(value):
     if value is None:
         return None
 
-    # Removes unnecessary whitespace around API values.
+    # Removes unnecessary whitespace around values returned by the API.
     value = value.strip()
 
     # Empty strings and OMDb's "N/A" both mean that no useful
@@ -119,6 +143,89 @@ def parse_imdb_rating(rating):
         return None
 
 
+def flash_movie_message(text, category, imdb_id=None):
+    """
+    Stores feedback for a movie action in Flask's flash session.
+
+    The IMDb ID connects the message to the exact movie card that caused
+    the action. Messages without an IMDb ID can later be displayed as
+    general page-level feedback.
+    """
+
+    flash(
+        {
+            "text": text,
+            "imdb_id": imdb_id
+        },
+        category
+    )
+
+
+def redirect_after_movie_action(
+    user_id,
+    source,
+    query=None,
+    imdb_id=None
+):
+    """
+    Redirects the user back to the page where a movie action started.
+
+    Search actions return to the same search results and Explore actions
+    return to the same recommendation collection. If an IMDb ID is
+    available, an HTML anchor is added so that the browser can locate
+    the affected movie card after the redirect.
+    """
+
+    # Each movie action area has an HTML id such as:
+    #
+    # movie-tt0133093
+    #
+    # This becomes the URL fragment:
+    #
+    # #movie-tt0133093
+    #
+    # It provides a useful fallback even when JavaScript is unavailable.
+    anchor = None
+
+    if imdb_id:
+        anchor = f"movie-{imdb_id}"
+
+    # Search needs the original query so that the same result list
+    # can be generated again after the redirect.
+    if source == "search" and query:
+        return redirect(
+            url_for(
+                "search_movies",
+                user_id=user_id,
+                query=query,
+                _anchor=anchor
+            )
+        )
+
+    # Explore receives preserve_order=1 after a movie action.
+    # This tells the Explore route to reuse the current shuffle seed
+    # instead of creating a new random order.
+    if source == "explore":
+        return redirect(
+            url_for(
+                "explore_movies",
+                user_id=user_id,
+                preserve_order=1,
+                _anchor=anchor
+            )
+        )
+
+    # Only known application destinations are accepted.
+    # Any unexpected source value safely returns to the favorites page.
+    return redirect(
+        url_for(
+            "get_movies",
+            user_id=user_id,
+            _anchor=anchor
+        )
+    )
+
+
 @app.route("/")
 def index():
     """Displays all registered users."""
@@ -145,10 +252,15 @@ def create_user():
 
     # Redirects after the POST request so that refreshing the page
     # does not submit the form again.
-    return redirect(url_for("index"))
+    return redirect(
+        url_for("index")
+    )
 
 
-@app.route("/users/<int:user_id>/movies", methods=["GET"])
+@app.route(
+    "/users/<int:user_id>/movies",
+    methods=["GET"]
+)
 def get_movies(user_id):
     """Displays all favorite movies belonging to a user."""
 
@@ -177,14 +289,28 @@ def search_movies(user_id):
     # favorite movie page instead of calling OMDb.
     if not query:
         return redirect(
-            url_for("get_movies", user_id=user_id)
+            url_for(
+                "get_movies",
+                user_id=user_id
+            )
         )
 
     # Reads the OMDb API key loaded from the .env file.
     api_key = os.getenv("OMDB_API_KEY")
 
+    # Search errors should be displayed on the search results page
+    # instead of replacing the application with a plain text error.
     if not api_key:
-        return "OMDb API key is not configured.", 500
+        return render_template(
+            "search_results.html",
+            user_id=user_id,
+            query=query,
+            search_results=[],
+            total_results=0,
+            search_error=(
+                "Movie search is currently unavailable."
+            )
+        ), 500
 
     try:
         # Searches OMDb for movies matching the partial title.
@@ -204,23 +330,35 @@ def search_movies(user_id):
             timeout=10
         )
 
+        # Raises an exception for unsuccessful HTTP status codes.
         response.raise_for_status()
 
-    # Handles connection errors, timeouts and unsuccessful HTTP responses.
+        # Converts the JSON response into a Python dictionary.
+        search_data = response.json()
+
+    # Handles connection errors, timeouts and unsuccessful HTTP responses
+    # without leaving the search results page.
     except requests.RequestException as error:
         print(f"OMDb search request failed: {error}")
 
-        return "Could not connect to OMDb.", 502
-
-    # Converts the OMDb JSON response into a Python dictionary.
-    search_data = response.json()
+        return render_template(
+            "search_results.html",
+            user_id=user_id,
+            query=query,
+            search_results=[],
+            total_results=0,
+            search_error=(
+                "The movie service is currently unavailable. "
+                "Please try again."
+            )
+        ), 502
 
     # OMDb may return HTTP 200 even when the actual search did not
     # produce usable results.
     if search_data.get("Response") == "False":
         omdb_error = search_data.get("Error", "")
 
-        # Very broad search terms receive a more useful MoviWeb message.
+        # Very broad searches receive a more useful MoviWeb message.
         if omdb_error == "Too many results.":
             search_error = (
                 "Too many results. Please refine your search."
@@ -240,11 +378,16 @@ def search_movies(user_id):
     # OMDb stores successful search matches inside the "Search" list.
     search_results = search_data.get("Search", [])
 
-    # OMDb returns totalResults as a string, so MoviWeb converts it
-    # into an integer before passing it to the template.
-    total_results = int(
-        search_data.get("totalResults", 0)
-    )
+    # OMDb normally returns totalResults as a string.
+    # If the value is unexpectedly invalid, the number of results
+    # actually received is used as a safe fallback.
+    try:
+        total_results = int(
+            search_data.get("totalResults", 0)
+        )
+
+    except (TypeError, ValueError):
+        total_results = len(search_results)
 
     return render_template(
         "search_results.html",
@@ -280,11 +423,31 @@ def explore_movies(user_id):
     ) as file:
         movie_suggestions = json.load(file)
 
-    # Randomizes the order for this page request.
-    # Because the JSON file is loaded fresh for every request,
-    # shuffle() only changes the in-memory list and never modifies
-    # the actual movie_suggestions.json file.
-    random.shuffle(movie_suggestions)
+    # preserve_order is only added to the URL when the user returns
+    # to Explore after a movie action such as Add Movie.
+    preserve_order = (
+        request.args.get("preserve_order") == "1"
+    )
+
+    # When Explore is opened normally, a new shuffle seed is generated.
+    #
+    # Only this small integer is stored in Flask's session. Storing the
+    # complete 100-movie order would unnecessarily enlarge the session.
+    if not preserve_order or "explore_seed" not in session:
+        session["explore_seed"] = random.randint(
+            0,
+            2**32 - 1
+        )
+
+    # A dedicated Random object uses the saved seed.
+    # The same seed always produces the same shuffled order.
+    shuffle_generator = random.Random(
+        session["explore_seed"]
+    )
+
+    shuffle_generator.shuffle(
+        movie_suggestions
+    )
 
     return render_template(
         "explore.html",
@@ -300,27 +463,53 @@ def explore_movies(user_id):
 def add_movie(user_id):
     """Adds a selected OMDb movie to a user's favorite movies."""
 
-    # The search result submits the unique IMDb ID instead of a title.
-    # This ensures that exactly the movie selected by the user is loaded.
+    # The search or Explore page submits the unique IMDb ID
+    # of the movie selected by the user.
     imdb_id = request.form.get("imdb_id", "").strip()
 
+    # These values describe where the Add Movie action started.
+    # They allow MoviWeb to return the user to the same browsing page
+    # after success, duplicate detection or another handled error.
+    source = request.form.get("source", "").strip()
+    query = request.form.get("query", "").strip()
+
     # Without an IMDb ID, no movie can be identified.
+    # This is a general action error because there is no movie ID
+    # available that could identify a specific card.
     if not imdb_id:
-        return redirect(
-            url_for("get_movies", user_id=user_id)
+        flash_movie_message(
+            "No movie was selected.",
+            "error"
         )
 
-    # Reads the API key from the environment.
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query
+        )
+
+    # Reads the OMDb API key from the environment.
     api_key = os.getenv("OMDB_API_KEY")
 
     if not api_key:
-        return "OMDb API key is not configured.", 500
+        flash_movie_message(
+            "The movie service is currently unavailable.",
+            "error",
+            imdb_id
+        )
+
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            imdb_id
+        )
 
     try:
         # Loads the complete OMDb details for the selected IMDb ID.
         #
-        # A short plot is sufficient for MoviWeb's movie cards and
-        # prevents unnecessarily long descriptions from being stored.
+        # A short plot is sufficient for MoviWeb's favorite movie cards
+        # and prevents unnecessarily long descriptions from being stored.
         response = requests.get(
             "https://www.omdbapi.com/",
             params={
@@ -331,25 +520,65 @@ def add_movie(user_id):
             timeout=10
         )
 
+        # Raises an exception for unsuccessful HTTP status codes.
         response.raise_for_status()
 
-    # Handles connection errors, timeouts and unsuccessful HTTP responses.
+        # Converts the OMDb detail response into a Python dictionary.
+        movie_data = response.json()
+
+    # Connection errors, timeouts or unsuccessful HTTP responses
+    # return the user directly to the selected movie card.
     except requests.RequestException as error:
         print(f"OMDb movie request failed: {error}")
 
-        return "Could not connect to OMDb.", 502
+        flash_movie_message(
+            (
+                "The selected movie could not be loaded. "
+                "Please try again."
+            ),
+            "error",
+            imdb_id
+        )
 
-    # Converts the detail response into a Python dictionary.
-    movie_data = response.json()
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            imdb_id
+        )
 
-    # OMDb can return HTTP 200 even when the supplied IMDb ID is invalid.
+    # OMDb can return HTTP 200 even when the supplied IMDb ID
+    # does not identify an available movie.
     if movie_data.get("Response") == "False":
-        return "Movie could not be found.", 404
+        flash_movie_message(
+            "The selected movie could not be found.",
+            "error",
+            imdb_id
+        )
 
-    # The IMDb ID comes from the client request.
-    # The response is therefore checked again before anything is stored.
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            imdb_id
+        )
+
+    # The IMDb ID comes from a client request.
+    # Although Search and Explore normally provide movie IDs,
+    # the returned OMDb type is checked again before storing anything.
     if movie_data.get("Type") != "movie":
-        return "Selected result is not a movie.", 400
+        flash_movie_message(
+            "The selected result is not a movie.",
+            "error",
+            imdb_id
+        )
+
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            imdb_id
+        )
 
     # Title, year and IMDb ID are required core movie information.
     title = normalize_omdb_value(
@@ -364,22 +593,55 @@ def add_movie(user_id):
         movie_data.get("imdbID")
     )
 
-    # A movie without one of these required core values cannot satisfy
+    # A movie without one of these required values cannot satisfy
     # the Movie model and therefore must not be stored.
-    if title is None or year_value is None or movie_imdb_id is None:
-        return "OMDb returned incomplete movie data.", 502
+    if (
+        title is None
+        or year_value is None
+        or movie_imdb_id is None
+    ):
+        flash_movie_message(
+            (
+                "The selected movie contains incomplete data "
+                "and could not be added."
+            ),
+            "error",
+            imdb_id
+        )
+
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            imdb_id
+        )
 
     try:
         # MoviWeb stores one numeric release year for every movie.
         year = int(year_value)
 
-    # Unlike runtime or rating, year is required.
-    # An invalid year therefore prevents the movie from being stored.
+    # Unlike runtime or rating, year is required by our data model.
+    # An invalid release year therefore prevents the movie from
+    # being stored.
     except ValueError:
-        return "OMDb returned an invalid movie year.", 502
+        flash_movie_message(
+            (
+                "The selected movie contains an invalid release year "
+                "and could not be added."
+            ),
+            "error",
+            movie_imdb_id
+        )
 
-    # Optional values are normalized before they are stored.
-    # Missing OMDb information becomes Python None and later SQL NULL.
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            movie_imdb_id
+        )
+
+    # Optional OMDb values are normalized before they are stored.
+    # Missing information becomes Python None and later SQL NULL.
     director = normalize_omdb_value(
         movie_data.get("Director")
     )
@@ -419,16 +681,43 @@ def add_movie(user_id):
         user_id=user_id
     )
 
-    # The DataManager returns False if this user already has a movie
-    # with the same IMDb ID in their favorites.
+    # The DataManager checks whether this user already has a movie
+    # with the same IMDb ID before attempting to insert it.
     movie_added = data_manager.add_movie(movie)
 
+    # A duplicate is not treated as an application crash.
+    # The message is attached to the movie's IMDb ID so that the
+    # template can display it directly beside the selected card.
     if not movie_added:
-        return "This movie is already in your favorites.", 409
+        flash_movie_message(
+            f"{movie.name} is already in your favorites.",
+            "warning",
+            movie.imdb_id
+        )
 
-    # Redirects back to the user's favorites after a successful insert.
-    return redirect(
-        url_for("get_movies", user_id=user_id)
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            movie.imdb_id
+        )
+
+    # A successful action is handled in exactly the same way.
+    # The flash message survives the redirect and can be displayed
+    # directly on the card that caused the action.
+    flash_movie_message(
+        f"{movie.name} was added to your favorites.",
+        "success",
+        movie.imdb_id
+    )
+
+    # Search users return to the same search and the affected card.
+    # Explore users return to the same recommendation order and card.
+    return redirect_after_movie_action(
+        user_id,
+        source,
+        query,
+        movie.imdb_id
     )
 
 
@@ -452,7 +741,10 @@ def update_movie(user_id, movie_id):
         )
 
     return redirect(
-        url_for("get_movies", user_id=user_id)
+        url_for(
+            "get_movies",
+            user_id=user_id
+        )
     )
 
 
@@ -471,7 +763,10 @@ def delete_movie(user_id, movie_id):
     )
 
     return redirect(
-        url_for("get_movies", user_id=user_id)
+        url_for(
+            "get_movies",
+            user_id=user_id
+        )
     )
 
 
@@ -481,18 +776,19 @@ def page_not_found(error):
 
     # Flask passes the original error object to the handler.
     # MoviWeb currently only needs to display its custom error page.
-    return render_template("404.html"), 404
+    return render_template(
+        "404.html"
+    ), 404
 
 
 if __name__ == "__main__":
     # The application context gives SQLAlchemy access to the
     # Flask application's database configuration.
     with app.app_context():
-        # Creates tables that do not exist yet.
+        # Creates database tables that do not exist yet.
         #
-        # create_all() does not migrate an already existing table when
-        # the Python model changes. That is why we are performing one
-        # deliberate database reset during the current schema redesign.
+        # create_all() creates missing tables but does not migrate
+        # already existing tables when a model changes.
         db.create_all()
 
     # Starts Flask's local development server.

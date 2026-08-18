@@ -1,95 +1,131 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <section class="explore-page">
-        <a
-            href="{{ url_for(
-                'get_movies',
-                user_id=user_id
-            ) }}"
-            class="back-link"
-        >
-            ← Back to Favorites
-        </a>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        <section class="explore-page">
+            <a
+                href="{{ url_for(
+                    'get_movies',
+                    user_id=user_id
+                ) }}"
+                class="back-link"
+            >
+                ← Back to Favorites
+            </a>
 
-        <header class="explore-header">
-            <h1>100 Movies to Explore</h1>
+            {% for category, message in messages %}
+                {% if not message.imdb_id %}
+                    <div
+                        class="flash-message flash-{{ category }}"
+                        role="status"
+                    >
+                        {{ message.text }}
+                    </div>
+                {% endif %}
+            {% endfor %}
 
-            <p>
-                A curated collection of arthouse films,
-                science fiction, AI, hacker culture,
-                cult classics and popular favorites.
-            </p>
-        </header>
+            <header class="explore-header">
+                <h1>100 Movies to Explore</h1>
 
-        {% if movie_suggestions %}
-            <ul class="movie-suggestions">
-                {% for movie in movie_suggestions %}
-                    <li class="movie-suggestion">
-                        <article class="movie-suggestion-card">
-                            {% if movie.poster_url %}
-                                <img
-                                    src="{{ movie.poster_url }}"
-                                    alt="Poster for {{ movie.title }}"
-                                    class="movie-suggestion-poster"
-                                >
-                            {% endif %}
+                <p>
+                    A curated collection of arthouse films,
+                    science fiction, AI, hacker culture,
+                    cult classics and popular favorites.
+                </p>
+            </header>
 
-                            <div class="movie-suggestion-content">
-                                <h2>{{ movie.title }}</h2>
-
-                                <p>
-                                    <strong>Year:</strong>
-                                    {{ movie.year }}
-                                </p>
-
-                                {% if movie.tags %}
-                                    <div class="movie-tags">
-                                        {% for tag in movie.tags %}
-                                            <span class="movie-tag">
-                                                {{ tag }}
-                                            </span>
-                                        {% endfor %}
-                                    </div>
+            {% if movie_suggestions %}
+                <ul class="movie-suggestions">
+                    {% for movie in movie_suggestions %}
+                        <li class="movie-suggestion">
+                            <article class="movie-suggestion-card">
+                                {% if movie.poster_url %}
+                                    <img
+                                        src="{{ movie.poster_url }}"
+                                        alt="Poster for {{ movie.title }}"
+                                        class="movie-suggestion-poster"
+                                    >
                                 {% endif %}
 
-                                <form
-                                    action="{{ url_for(
-                                        'add_movie',
-                                        user_id=user_id
-                                    ) }}"
-                                    method="post"
-                                >
-                                    <input
-                                        type="hidden"
-                                        name="imdb_id"
-                                        value="{{ movie.imdb_id }}"
+                                <div class="movie-suggestion-content">
+                                    <h2>{{ movie.title }}</h2>
+
+                                    <p>
+                                        <strong>Year:</strong>
+                                        {{ movie.year }}
+                                    </p>
+
+                                    {% if movie.tags %}
+                                        <div class="movie-tags">
+                                            {% for tag in movie.tags %}
+                                                <span class="movie-tag">
+                                                    {{ tag }}
+                                                </span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    <div
+                                        id="movie-{{ movie.imdb_id }}"
+                                        class="movie-action-area"
                                     >
+                                        <form
+                                            action="{{ url_for(
+                                                'add_movie',
+                                                user_id=user_id
+                                            ) }}"
+                                            method="post"
+                                            class="add-movie-form"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="imdb_id"
+                                                value="{{ movie.imdb_id }}"
+                                            >
 
-                                    <button type="submit">
-                                        Add Movie
-                                    </button>
-                                </form>
-                            </div>
-                        </article>
-                    </li>
-                {% endfor %}
-            </ul>
+                                            <input
+                                                type="hidden"
+                                                name="source"
+                                                value="explore"
+                                            >
 
-        {% else %}
-            <p>
-                No movie recommendations are available.
-            </p>
-        {% endif %}
+                                            <button type="submit">
+                                                Add Movie
+                                            </button>
+                                        </form>
 
-        <a
-            href="{{ url_for(
-                'get_movies',
-                user_id=user_id
-            ) }}"
-            class="back-link"
-        >
-            ← Back to Favorites
-        </a>
-    </section>
+                                        {% for category, message in messages %}
+                                            {% if message.imdb_id == movie.imdb_id %}
+                                                <div
+                                                    class="flash-message flash-{{ category }}"
+                                                    role="status"
+                                                >
+                                                    {{ message.text }}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            {% else %}
+                <p class="explore-message">
+                    No movie recommendations are available.
+                </p>
+            {% endif %}
+
+            <a
+                href="{{ url_for(
+                    'get_movies',
+                    user_id=user_id
+                ) }}"
+                class="back-link"
+            >
+                ← Back to Favorites
+            </a>
+        </section>
+    {% endwith %}
 {% endblock %}
