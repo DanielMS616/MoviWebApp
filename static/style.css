@@ -1,0 +1,334 @@
+/*
+ * ------------------------------------------------------------
+ * MoviWeb Video Club
+ * Global design foundation
+ * ------------------------------------------------------------
+ *
+ * This first section defines the shared visual language used
+ * throughout the application.
+ *
+ * Individual page components such as member cards and movie
+ * cases will be added in later sections.
+ */
+
+
+/*
+ * CSS custom properties store the main design values in one place.
+ *
+ * Instead of repeating the same color in many rules, components can
+ * later use values such as var(--color-accent-gold).
+ */
+:root {
+    --color-background: #11100f;
+    --color-surface: #1a1816;
+    --color-surface-light: #24211e;
+
+    --color-text: #f2eadf;
+    --color-text-muted: #aaa095;
+
+    --color-accent-red: #b43b32;
+    --color-accent-gold: #d5a33f;
+
+    --color-border: #39332d;
+
+    --page-width: 1180px;
+}
+
+
+/*
+ * box-sizing: border-box makes element sizing easier to reason about.
+ *
+ * Padding and borders are included inside the declared width instead
+ * of increasing the final size of an element.
+ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+/*
+ * Removes the browser's default outer page margin and establishes
+ * the shared MoviWeb color and typography settings.
+ */
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(180, 59, 50, 0.08),
+            transparent 35%
+        ),
+        var(--color-background);
+
+    color: var(--color-text);
+
+    font-family:
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    line-height: 1.5;
+}
+
+
+/*
+ * Images should never exceed the width of their container.
+ *
+ * display: block also removes the small inline-image gap browsers
+ * normally leave underneath images.
+ */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/*
+ * Form controls inherit the page font instead of using a different
+ * browser-specific default font.
+ */
+button,
+input {
+    font: inherit;
+}
+
+
+/*
+ * Shared content container.
+ *
+ * max-width prevents very long lines on large monitors while
+ * margin: 0 auto centers the application horizontally.
+ */
+.container {
+    width: min(
+        calc(100% - 48px),
+        var(--page-width)
+    );
+
+    margin: 0 auto;
+    padding: 48px 0 72px;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Global header
+ * ------------------------------------------------------------
+ */
+
+.site-header {
+    background: var(--color-surface);
+
+    border-bottom: 3px solid var(--color-accent-gold);
+
+    box-shadow:
+        0 1px 0 var(--color-accent-red),
+        0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+
+/*
+ * Keeps the header content aligned with the main page container.
+ */
+.site-header-inner {
+    width: min(
+        calc(100% - 48px),
+        var(--page-width)
+    );
+
+    margin: 0 auto;
+    padding: 20px 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+}
+
+
+/*
+ * The complete MoviWeb wordmark is a normal link.
+ *
+ * text-decoration removes the browser's default underline because
+ * the brand itself provides enough visual indication.
+ */
+.site-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/*
+ * Main MOVIWEB lettering.
+ *
+ * Letter spacing and a heavier font create the retro video-store
+ * sign feeling without requiring an external font or image.
+ */
+.site-brand-name {
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: 2rem;
+    line-height: 1;
+
+    letter-spacing: 0.12em;
+}
+
+
+/*
+ * VIDEO CLUB acts as the secondary part of the logo.
+ */
+.site-brand-subtitle {
+    margin-top: 5px;
+
+    color: var(--color-accent-red);
+
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    letter-spacing: 0.28em;
+}
+
+
+/*
+ * Small location/year line requested for the MoviWeb identity.
+ */
+.site-brand-meta {
+    margin-top: 8px;
+
+    color: var(--color-accent-gold);
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+}
+
+
+/*
+ * Navigation links are displayed in one horizontal row on larger
+ * screens.
+ */
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+
+/*
+ * Navigation deliberately stays simple.
+ *
+ * The retro character comes from typography, spacing and the
+ * color palette rather than large buttons or excessive effects.
+ */
+.site-nav-link {
+    position: relative;
+
+    padding: 8px 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    transition:
+        color 160ms ease;
+}
+
+
+/*
+ * The small underline appears only while a link is hovered or
+ * keyboard-focused.
+ */
+.site-nav-link::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2px;
+
+    height: 2px;
+
+    background: var(--color-accent-gold);
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition:
+        transform 160ms ease;
+}
+
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible {
+    color: var(--color-text);
+}
+
+
+.site-nav-link:hover::after,
+.site-nav-link:focus-visible::after {
+    transform: scaleX(1);
+}
+
+
+/*
+ * A visible keyboard focus state improves accessibility for users
+ * who navigate without a mouse.
+ */
+.site-brand:focus-visible,
+.site-nav-link:focus-visible {
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 5px;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Responsive header
+ * ------------------------------------------------------------
+ *
+ * On smaller screens the brand and navigation are stacked instead
+ * of forcing both into a narrow horizontal row.
+ */
+@media (max-width: 720px) {
+    .container,
+    .site-header-inner {
+        width: min(
+            calc(100% - 32px),
+            var(--page-width)
+        );
+    }
+
+    .site-header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .site-nav {
+        width: 100%;
+        gap: 20px;
+
+        overflow-x: auto;
+    }
+
+    .site-brand-name {
+        font-size: 1.7rem;
+    }
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MoviWeb App</title>
+    <title>MoviWeb Video Club</title>
 
     <link
         rel="stylesheet"
@@ -13,12 +13,70 @@
 </head>
 
 <body>
-    <header>
-        <h1>MoviWeb App</h1>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <!--
+            The brand always links back to the member overview.
+            The three separate text elements allow the logo to be
+            styled without requiring an image file.
+            -->
+            <a
+                href="{{ url_for('index') }}"
+                class="site-brand"
+            >
+                <span class="site-brand-name">
+                    MOVIWEB
+                </span>
 
-        <nav>
-            <a href="{{ url_for('index') }}">Home</a>
-        </nav>
+                <span class="site-brand-subtitle">
+                    VIDEO CLUB
+                </span>
+
+                <span class="site-brand-meta">
+                    EST. 2026 · BERLIN
+                </span>
+            </a>
+
+            <!--
+            Members is available on every page.
+
+            Collection and Explore require a user_id, so those links
+            are only displayed on pages that belong to a selected user.
+            -->
+            <nav
+                class="site-nav"
+                aria-label="Primary navigation"
+            >
+                <a
+                    href="{{ url_for('index') }}"
+                    class="site-nav-link"
+                >
+                    Members
+                </a>
+
+                {% if user_id is defined %}
+                    <a
+                        href="{{ url_for(
+                            'get_movies',
+                            user_id=user_id
+                        ) }}"
+                        class="site-nav-link"
+                    >
+                        Collection
+                    </a>
+
+                    <a
+                        href="{{ url_for(
+                            'explore_movies',
+                            user_id=user_id
+                        ) }}"
+                        class="site-nav-link"
+                    >
+                        Explore
+                    </a>
+                {% endif %}
+            </nav>
+        </div>
     </header>
 
     <main class="container">
