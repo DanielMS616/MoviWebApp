@@ -121,6 +121,14 @@ input {
  */
 
 .site-header {
+    /*
+     * On desktop the complete MoviWeb header remains visible while
+     * the user scrolls through a movie collection.
+     */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
     background: var(--color-surface);
 
     border-bottom: 3px solid var(--color-accent-gold);
@@ -307,6 +315,24 @@ input {
  * of forcing both into a narrow horizontal row.
  */
 @media (max-width: 720px) {
+    /*
+     * The complete header is sticky on desktop.
+     *
+     * On mobile it is allowed to move upward until the branding
+     * disappears. The navigation then remains at the top of the
+     * viewport while the page continues scrolling.
+     *
+     * The offset corresponds approximately to the height of the
+     * mobile MoviWeb branding above the navigation.
+     */
+    .site-header {
+        --mobile-brand-scroll-offset: 102px;
+
+        top: calc(
+            -1 * var(--mobile-brand-scroll-offset)
+        );
+    }
+
     .container,
     .site-header-inner {
         width: min(
@@ -319,11 +345,24 @@ input {
         align-items: flex-start;
         flex-direction: column;
         gap: 18px;
+
+        /*
+         * The navigation itself becomes the visible lower edge of
+         * the sticky mobile header, so no additional bottom spacing
+         * is needed.
+         */
+        padding-bottom: 0;
     }
 
     .site-nav {
         width: 100%;
         gap: 20px;
+
+        padding: 8px 0 12px;
+
+        background: var(--color-surface);
+
+        border-top: 1px solid var(--color-border);
 
         overflow-x: auto;
     }
@@ -978,5 +1017,797 @@ input {
 
     .user-movies-link {
         text-align: left;
+    }
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Personal movie collection
+ * ------------------------------------------------------------
+ */
+
+.user-movies-page {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Collection header
+ * ------------------------------------------------------------
+ */
+
+.user-movies-header {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+}
+
+
+.collection-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+}
+
+
+.collection-title {
+    min-width: 0;
+}
+
+
+.collection-title h1 {
+    margin: 0;
+
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: clamp(2rem, 5vw, 3.7rem);
+    line-height: 1;
+
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+
+    /*
+     * Very long member names must be allowed to wrap instead of
+     * forcing the page wider than the available screen.
+     */
+    overflow-wrap: anywhere;
+}
+
+
+.collection-count {
+    flex-shrink: 0;
+
+    margin: 0;
+    padding-bottom: 4px;
+
+    color: var(--color-accent-gold);
+
+    font-size: 0.75rem;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Movie discovery
+ * ------------------------------------------------------------
+ */
+
+.movie-discovery {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(280px, 1fr);
+    gap: 20px;
+}
+
+
+.movie-search-section,
+.movie-explore-section {
+    padding: 24px;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+}
+
+
+.movie-search-section {
+    border-left: 4px solid var(--color-accent-gold);
+}
+
+
+.movie-explore-section {
+    border-left: 4px solid var(--color-accent-red);
+}
+
+
+.movie-search-section h2,
+.movie-explore-section h2 {
+    margin: 0;
+
+    font-size: 1.25rem;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+
+.movie-search-form {
+    margin-top: 20px;
+}
+
+
+.movie-search-form label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+
+.movie-search-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+}
+
+
+.movie-search-controls input {
+    min-width: 0;
+
+    padding: 12px 13px;
+
+    background: var(--color-background);
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+
+    outline: none;
+}
+
+
+.movie-search-controls input:focus {
+    border-color: var(--color-accent-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(213, 163, 63, 0.1);
+}
+
+
+.movie-search-controls button {
+    padding: 0 18px;
+
+    background: var(--color-accent-gold);
+    color: #18130d;
+
+    border: 1px solid var(--color-accent-gold);
+    border-radius: 2px;
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+
+.movie-explore-section > p:not(.section-kicker) {
+    margin: 14px 0 18px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.88rem;
+}
+
+
+.explore-link {
+    color: var(--color-text);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.11em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+
+.explore-link span {
+    color: var(--color-accent-gold);
+}
+
+
+.explore-link:hover,
+.explore-link:focus-visible {
+    color: var(--color-accent-gold);
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * DVD shelf
+ * ------------------------------------------------------------
+ */
+
+.movie-list {
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    /*
+     * Cards in the same shelf row use the same height.
+     */
+    align-items: stretch;
+
+    gap: 30px;
+
+    list-style: none;
+}
+
+
+.movie-entry {
+    min-width: 0;
+    height: 100%;
+}
+
+
+/*
+ * The movie card represents a dark plastic DVD case.
+ *
+ * The slight inset border and left edge simulate the structure of
+ * a physical case without relying on image assets or heavy effects.
+ */
+.movie-card {
+    position: relative;
+    overflow: hidden;
+
+    min-width: 0;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.025),
+            transparent 38%
+        ),
+        #171614;
+
+    border: 1px solid #403b36;
+    border-left: 7px solid #24211e;
+    border-radius: 3px;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+        0 14px 30px rgba(0, 0, 0, 0.28);
+
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+
+/*
+ * The small upward movement gives the impression that a DVD case is
+ * being pulled slightly out of the shelf.
+ */
+.movie-card:hover {
+    transform: translateY(-6px);
+
+    border-color: #565049;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+        0 22px 40px rgba(0, 0, 0, 0.36);
+}
+
+
+.movie-case-top {
+    padding: 9px 13px;
+
+    background: #0d0c0b;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.movie-case-label {
+    color: var(--color-accent-gold);
+
+    font-size: 0.58rem;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * Every movie receives the same poster area, even if OMDb did not
+ * provide an image.
+ *
+ * A 2:3 ratio roughly matches common movie-poster proportions.
+ */
+.movie-poster-frame {
+    aspect-ratio: 2 / 3;
+
+    overflow: hidden;
+
+    background: #0c0b0a;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.movie-poster {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.movie-poster-placeholder {
+    width: 100%;
+    height: 100%;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--color-text-muted);
+    text-align: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(180, 59, 50, 0.08),
+            rgba(213, 163, 63, 0.04)
+        );
+}
+
+
+.movie-poster-placeholder span {
+    color: var(--color-accent-gold);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+
+.movie-poster-placeholder strong {
+    font-size: 1rem;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * DVD information
+ * ------------------------------------------------------------
+ */
+
+.movie-content {
+    min-width: 0;
+    padding: 18px;
+
+    /*
+     * The content fills the remaining DVD-case height.
+     *
+     * This allows the action area to stay aligned at the bottom
+     * even when movie titles contain different amounts of text.
+     */
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.movie-title-block {
+    min-width: 0;
+
+    /*
+     * The title and director area has a stable height on every DVD
+     * case. This prevents short movie titles from making one card
+     * visually smaller than another.
+     */
+    height: 4.8rem;
+
+    overflow: hidden;
+}
+
+
+.movie-title-block h3 {
+    margin: 0;
+
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: 1.25rem;
+    line-height: 1.1;
+
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+
+    /*
+     * Every DVD reserves space for at most two title lines.
+     *
+     * Longer titles are clipped instead of increasing the height
+     * of the complete card.
+     */
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    overflow-wrap: anywhere;
+}
+
+
+.movie-director {
+    margin: 7px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.78rem;
+
+    /*
+     * Director names remain on one line so that they cannot change
+     * the standard DVD-case height.
+     */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.movie-details {
+    margin-top: 18px;
+
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(65px, 1fr)
+        );
+
+    gap: 8px;
+
+    padding: 12px 0;
+
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.movie-details p {
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+.movie-details span {
+    color: var(--color-text-muted);
+
+    font-size: 0.55rem;
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+
+.movie-details strong {
+    color: var(--color-text);
+
+    font-size: 0.78rem;
+}
+
+
+.movie-genre {
+    margin: 12px 0 0;
+
+    color: var(--color-accent-gold);
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    overflow-wrap: anywhere;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Expandable DVD information
+ * ------------------------------------------------------------
+ */
+
+.movie-plot-panel,
+.movie-edit-panel {
+    margin-top: 14px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+.movie-plot-panel summary,
+.movie-edit-panel summary {
+    padding: 11px 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.65rem;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease;
+}
+
+
+.movie-plot-panel summary:hover,
+.movie-edit-panel summary:hover {
+    color: var(--color-accent-gold);
+}
+
+
+.movie-plot-panel p {
+    margin: 2px 0 8px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.8rem;
+    line-height: 1.55;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Movie actions
+ * ------------------------------------------------------------
+ */
+
+.movie-actions {
+    /*
+     * Pushes the expandable actions toward the lower part of the
+     * DVD case so that cards remain visually aligned.
+     */
+    margin-top: auto;
+    padding-top: 10px;
+}
+
+
+.update-movie-form {
+    padding: 4px 0 10px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.update-movie-form label {
+    color: var(--color-text-muted);
+
+    font-size: 0.6rem;
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+
+.update-movie-form input {
+    min-width: 0;
+    width: 100%;
+
+    padding: 10px;
+
+    background: var(--color-background);
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
+
+    outline: none;
+}
+
+
+.update-movie-form input:focus {
+    border-color: var(--color-accent-gold);
+}
+
+
+.update-movie-form button {
+    padding: 9px 10px;
+
+    background: transparent;
+    color: var(--color-accent-gold);
+
+    border: 1px solid var(--color-accent-gold);
+
+    font-size: 0.62rem;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+}
+
+
+.delete-movie-form {
+    margin-top: 9px;
+}
+
+
+.delete-movie-form button {
+    padding: 0;
+
+    background: transparent;
+    color: #8d8279;
+
+    border: 0;
+
+    font-size: 0.6rem;
+    font-weight: 700;
+
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease;
+}
+
+
+.delete-movie-form button:hover,
+.delete-movie-form button:focus-visible {
+    color: #df6a60;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Empty collection and navigation
+ * ------------------------------------------------------------
+ */
+
+.empty-favorites-message {
+    padding: 42px;
+
+    background: var(--color-surface);
+
+    border: 1px dashed var(--color-border);
+
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+
+.empty-favorites-message p {
+    margin: 0;
+}
+
+
+.empty-favorites-message p + p {
+    margin-top: 8px;
+}
+
+
+.back-link {
+    align-self: flex-start;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.11em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+
+.back-link:hover,
+.back-link:focus-visible {
+    color: var(--color-accent-gold);
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Collection responsive adjustments
+ * ------------------------------------------------------------
+ */
+
+@media (max-width: 800px) {
+    .collection-title-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .movie-discovery {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 520px) {
+    /*
+     * On phones we deliberately use one full-width DVD per row.
+     * This keeps posters and controls comfortably readable.
+     */
+    .movie-list {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .movie-search-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .movie-search-controls button {
+        min-height: 44px;
+    }
+
+    .movie-search-section,
+    .movie-explore-section {
+        padding: 20px;
     }
 }

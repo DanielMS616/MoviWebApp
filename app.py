@@ -6,6 +6,7 @@ import requests
 from dotenv import load_dotenv
 from flask import (
     Flask,
+    abort,
     flash,
     redirect,
     render_template,
@@ -276,18 +277,46 @@ def delete_user(user_id):
     )
 
 
-@app.route(
-    "/users/<int:user_id>/movies",
-    methods=["GET"]
-)
+@app.route("/users/<int:user_id>/movies")
 def get_movies(user_id):
-    """Displays all favorite movies belonging to a user."""
+    """
+    Displays the favorite movie collection of a specific user.
 
-    # Loads only movies that belong to the selected user.
+    The user is loaded separately so that the template can display
+    information such as the user's name together with their movies.
+    """
+
+    # Looks up the user whose collection was requested.
+    #
+    # The URL contains the user ID, for example:
+    # /users/3/movies
+    #
+    # get_user() returns the matching User object or None if the
+    # requested user does not exist.
+    user = data_manager.get_user(user_id)
+
+    # A collection cannot belong to a user that does not exist.
+    #
+    # abort(404) stops the current request and lets Flask use the
+    # application's existing 404 error handler.
+    if not user:
+        abort(404)
+
+    # Loads only the movies that belong to the selected user.
     movies = data_manager.get_movies(user_id)
 
+    # Both the User object and their movies are passed to the
+    # template.
+    #
+    # This allows movies.html to use values such as:
+    # {{ user.name }}
+    # {{ movies }}
+    #
+    # user_id is still passed separately because existing links and
+    # forms use it when building their Flask URLs.
     return render_template(
         "movies.html",
+        user=user,
         movies=movies,
         user_id=user_id
     )

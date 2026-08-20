@@ -1,179 +1,361 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <section class="user-movies-header">
-        <h1>Your Movies</h1>
+    <section class="user-movies-page">
+        <!--
+        The selected User object is passed to this template by the
+        get_movies() route.
 
-        <div class="movie-discovery">
-            <section class="movie-search-section">
-                <h2>Search New Movie</h2>
+        This allows the page to display the actual member name instead
+        of using a generic collection heading.
+        -->
+        <header class="user-movies-header">
+            <p class="page-kicker">
+                Personal Movie Archive
+            </p>
 
-                <form
-                    action="{{ url_for(
-                        'search_movies',
-                        user_id=user_id
-                    ) }}"
-                    method="get"
-                    class="movie-search-form"
-                >
-                    <label for="query">
-                        Movie title
-                    </label>
+            <div class="collection-title-row">
+                <div class="collection-title">
+                    <h1>
+                        {{ user.name }}'s Collection
+                    </h1>
 
-                    <input
-                        type="text"
-                        id="query"
-                        name="query"
-                        required
+                    <p class="page-intro">
+                        A personal shelf of favorite movies,
+                        classics and new discoveries.
+                    </p>
+                </div>
+
+                <!--
+                movies is already available as a list in this template.
+
+                The length filter therefore counts the current collection
+                without requiring another database query.
+                -->
+                <p class="collection-count">
+                    {{ movies | length }}
+                    Title{% if movies | length != 1 %}s{% endif %}
+                </p>
+            </div>
+
+            <!--
+            Search and Explore both keep the selected user_id in their
+            URLs so that new movies can later be added to the correct
+            collection.
+            -->
+            <div class="movie-discovery">
+                <section class="movie-search-section">
+                    <p class="section-kicker">
+                        Catalog Search
+                    </p>
+
+                    <h2>Find a Movie</h2>
+
+                    <form
+                        action="{{ url_for(
+                            'search_movies',
+                            user_id=user_id
+                        ) }}"
+                        method="get"
+                        class="movie-search-form"
                     >
+                        <label for="query">
+                            Movie title
+                        </label>
 
-                    <button type="submit">
-                        Search
-                    </button>
-                </form>
-            </section>
+                        <!--
+                        name="query" must stay unchanged because app.py
+                        reads this value with request.args.get("query").
+                        -->
+                        <div class="movie-search-controls">
+                            <input
+                                type="text"
+                                id="query"
+                                name="query"
+                                placeholder="Search the catalog"
+                                required
+                            >
 
-            <section class="movie-explore-section">
-                <h2>Discover Movies</h2>
+                            <button type="submit">
+                                Search Catalog
+                            </button>
+                        </div>
+                    </form>
+                </section>
 
-                <a
-                    href="{{ url_for(
-                        'explore_movies',
-                        user_id=user_id
-                    ) }}"
-                    class="explore-link"
-                >
-                    100 Movies to Explore
-                </a>
-            </section>
-        </div>
-    </section>
+                <section class="movie-explore-section">
+                    <p class="section-kicker">
+                        Discover Something New
+                    </p>
 
-    <section class="favorites-section">
-        <h2>Your Favorites</h2>
+                    <h2>Explore the Shelves</h2>
 
-        {% if movies %}
-            <ul class="movie-list">
-                {% for movie in movies %}
-                    <li class="movie-entry">
-                        <article
-                            id="favorite-movie-{{ movie.id }}"
-                            class="movie-card"
-                        >
-                            {% if movie.poster_url %}
-                                <img
-                                    src="{{ movie.poster_url }}"
-                                    alt="Poster for {{ movie.name }}"
-                                    class="movie-poster"
-                                >
-                            {% endif %}
+                    <p>
+                        Browse 100 curated films from cult classics
+                        to science fiction and arthouse cinema.
+                    </p>
 
-                            <div class="movie-content">
-                                <h3>{{ movie.name }}</h3>
+                    <a
+                        href="{{ url_for(
+                            'explore_movies',
+                            user_id=user_id
+                        ) }}"
+                        class="explore-link"
+                    >
+                        Browse the Shelf
+                        <span aria-hidden="true">→</span>
+                    </a>
+                </section>
+            </div>
+        </header>
 
-                                <div class="movie-details">
-                                    <p>
-                                        <strong>Year:</strong>
-                                        {{ movie.year }}
-                                    </p>
+        <section class="favorites-section">
+            <div class="section-heading section-heading-shelf">
+                <div>
+                    <p class="section-kicker">
+                        MoviWeb Video Club
+                    </p>
 
-                                    {% if movie.runtime_minutes %}
-                                        <p>
-                                            <strong>Runtime:</strong>
-                                            {{ movie.runtime_minutes }} min
-                                        </p>
+                    <h2>Your Collection</h2>
+                </div>
+
+                <p class="section-count">
+                    {{ movies | length }}
+                    Title{% if movies | length != 1 %}s{% endif %}
+                </p>
+            </div>
+
+            {% if movies %}
+                <!--
+                The movie list becomes the responsive DVD shelf through
+                CSS Grid.
+
+                The HTML remains a normal list, which keeps the document
+                structure meaningful even without CSS.
+                -->
+                <ul class="movie-list">
+                    {% for movie in movies %}
+                        <li class="movie-entry">
+                            <!--
+                            This ID is part of the existing interaction
+                            between Flask redirects and app.js.
+
+                            After a movie title is updated, the application
+                            can return to this exact movie card.
+
+                            The ID format must therefore stay unchanged.
+                            -->
+                            <article
+                                id="favorite-movie-{{ movie.id }}"
+                                class="movie-card"
+                            >
+                                <div class="movie-case-top">
+                                    <span class="movie-case-label">
+                                        MoviWeb Collection
+                                    </span>
+                                </div>
+
+                                <!--
+                                A permanent poster frame keeps every DVD
+                                case the same basic shape.
+
+                                If OMDb did not provide a poster, a visual
+                                placeholder is displayed instead of removing
+                                the complete image area.
+                                -->
+                                <div class="movie-poster-frame">
+                                    {% if movie.poster_url %}
+                                        <img
+                                            src="{{ movie.poster_url }}"
+                                            alt="Poster for {{ movie.name }}"
+                                            class="movie-poster"
+                                        >
+                                    {% else %}
+                                        <div
+                                            class="movie-poster-placeholder"
+                                            aria-label="No poster available"
+                                        >
+                                            <span>
+                                                MoviWeb
+                                            </span>
+
+                                            <strong>
+                                                No Poster
+                                            </strong>
+                                        </div>
                                     {% endif %}
+                                </div>
+
+                                <div class="movie-content">
+                                    <div class="movie-title-block">
+                                        <h3>{{ movie.name }}</h3>
+
+                                        {% if movie.director %}
+                                            <p class="movie-director">
+                                                {{ movie.director }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+
+                                    <!--
+                                    Required and optional movie information
+                                    is kept separate.
+
+                                    Optional values are only displayed when
+                                    OMDb provided data that could be stored
+                                    successfully.
+                                    -->
+                                    <div class="movie-details">
+                                        <p>
+                                            <span>Year</span>
+                                            <strong>{{ movie.year }}</strong>
+                                        </p>
+
+                                        {% if movie.runtime_minutes %}
+                                            <p>
+                                                <span>Runtime</span>
+                                                <strong>
+                                                    {{ movie.runtime_minutes }} min
+                                                </strong>
+                                            </p>
+                                        {% endif %}
+
+                                        {% if movie.imdb_rating is not none %}
+                                            <p>
+                                                <span>IMDb</span>
+                                                <strong>
+                                                    {{ movie.imdb_rating }}
+                                                </strong>
+                                            </p>
+                                        {% endif %}
+                                    </div>
 
                                     {% if movie.genre %}
-                                        <p>
-                                            <strong>Genre:</strong>
+                                        <p class="movie-genre">
                                             {{ movie.genre }}
                                         </p>
                                     {% endif %}
 
-                                    {% if movie.imdb_rating is not none %}
-                                        <p>
-                                            <strong>IMDb rating:</strong>
-                                            {{ movie.imdb_rating }}
-                                        </p>
+                                    <!--
+                                    The plot is no longer permanently visible.
+
+                                    Using the native HTML details element keeps
+                                    the DVD card compact while still making the
+                                    stored plot available without extra
+                                    JavaScript or another database request.
+                                    -->
+                                    {% if movie.plot %}
+                                        <details class="movie-plot-panel">
+                                            <summary>
+                                                Movie Details
+                                            </summary>
+
+                                            <p>
+                                                {{ movie.plot }}
+                                            </p>
+                                        </details>
                                     {% endif %}
 
-                                    {% if movie.director %}
-                                        <p>
-                                            <strong>Director:</strong>
-                                            {{ movie.director }}
-                                        </p>
-                                    {% endif %}
-                                </div>
+                                    <div class="movie-actions">
+                                        <!--
+                                        Editing is also hidden until it is
+                                        needed so that the normal DVD shelf
+                                        does not look like a collection of
+                                        input forms.
+                                        -->
+                                        <details class="movie-edit-panel">
+                                            <summary>
+                                                Edit Title
+                                            </summary>
 
-                                {% if movie.plot %}
-                                    <div class="movie-plot">
-                                        <h4>Plot</h4>
+                                            <!--
+                                            The update-movie-form class must
+                                            remain because app.js listens for
+                                            submissions from this form.
 
-                                        <p>
-                                            {{ movie.plot }}
-                                        </p>
-                                    </div>
-                                {% endif %}
+                                            user_id and movie_id also allow the
+                                            backend to verify that this movie
+                                            belongs to the selected user.
+                                            -->
+                                            <form
+                                                action="{{ url_for(
+                                                    'update_movie',
+                                                    user_id=user_id,
+                                                    movie_id=movie.id
+                                                ) }}"
+                                                method="post"
+                                                class="update-movie-form"
+                                            >
+                                                <label for="title-{{ movie.id }}">
+                                                    Movie title
+                                                </label>
 
-                                <div class="movie-actions">
-                                    <form
-                                        action="{{ url_for(
-                                            'update_movie',
-                                            user_id=user_id,
-                                            movie_id=movie.id
-                                        ) }}"
-                                        method="post"
-                                        class="update-movie-form"
-                                    >
-                                        <label for="title-{{ movie.id }}">
-                                            Movie title
-                                        </label>
+                                                <!--
+                                                name="title" must match the
+                                                form value read by
+                                                update_movie() in app.py.
+                                                -->
+                                                <input
+                                                    type="text"
+                                                    id="title-{{ movie.id }}"
+                                                    name="title"
+                                                    value="{{ movie.name }}"
+                                                    required
+                                                >
 
-                                        <input
-                                            type="text"
-                                            id="title-{{ movie.id }}"
-                                            name="title"
-                                            value="{{ movie.name }}"
-                                            required
+                                                <button type="submit">
+                                                    Save Title
+                                                </button>
+                                            </form>
+                                        </details>
+
+                                        <!--
+                                        Removing a movie uses POST because it
+                                        changes stored data.
+
+                                        The backend receives both IDs and
+                                        deletes the movie only when it belongs
+                                        to the selected user.
+                                        -->
+                                        <form
+                                            action="{{ url_for(
+                                                'delete_movie',
+                                                user_id=user_id,
+                                                movie_id=movie.id
+                                            ) }}"
+                                            method="post"
+                                            class="delete-movie-form"
                                         >
-
-                                        <button type="submit">
-                                            Update Movie
-                                        </button>
-                                    </form>
-
-                                    <form
-                                        action="{{ url_for(
-                                            'delete_movie',
-                                            user_id=user_id,
-                                            movie_id=movie.id
-                                        ) }}"
-                                        method="post"
-                                        class="delete-movie-form"
-                                    >
-                                        <button type="submit">
-                                            Delete Movie
-                                        </button>
-                                    </form>
+                                            <button type="submit">
+                                                Remove from Collection
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                    </li>
-                {% endfor %}
-            </ul>
+                            </article>
+                        </li>
+                    {% endfor %}
+                </ul>
 
-        {% else %}
-            <p class="empty-favorites-message">
-                No favorite movies added yet.
-            </p>
-        {% endif %}
+            {% else %}
+                <div class="empty-favorites-message">
+                    <p class="empty-state-title">
+                        Your Shelf Is Empty
+                    </p>
+
+                    <p>
+                        Search the catalog or explore the shelves
+                        to add your first movie.
+                    </p>
+                </div>
+            {% endif %}
+        </section>
+
+        <a
+            href="{{ url_for('index') }}"
+            class="back-link"
+        >
+            ← Back to Members
+        </a>
     </section>
-
-    <a
-        href="{{ url_for('index') }}"
-        class="back-link"
-    >
-        Back to Users
-    </a>
 {% endblock %}

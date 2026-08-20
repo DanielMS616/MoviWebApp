@@ -16,6 +16,20 @@ class DataManager:
 
         return User.query.all()
 
+    def get_user(self, user_id):
+        """
+        Returns one user with the specified ID.
+
+        If no matching user exists, the query returns None.
+        """
+
+        # The user ID uniquely identifies one user in the database.
+        # first() returns the matching User object or None if no user
+        # with this ID exists.
+        return User.query.filter_by(
+            id=user_id
+        ).first()
+
     def delete_user(self, user_id):
         """
         Deletes a user together with all of their favorite movies.
