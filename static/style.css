@@ -332,3 +332,651 @@ input {
         font-size: 1.7rem;
     }
 }
+
+/*
+ * ------------------------------------------------------------
+ * Shared page headings
+ * ------------------------------------------------------------
+ */
+
+.users-page {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+
+.users-header {
+    max-width: 720px;
+}
+
+
+.page-kicker,
+.section-kicker {
+    margin: 0 0 8px;
+
+    color: var(--color-accent-gold);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+
+.users-header h1 {
+    margin: 0;
+
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: clamp(2rem, 5vw, 3.7rem);
+    line-height: 1;
+
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+
+.page-intro {
+    max-width: 620px;
+
+    margin: 20px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 1.05rem;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Shared section heading
+ * ------------------------------------------------------------
+ */
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+
+    margin-bottom: 24px;
+}
+
+
+.section-heading h2 {
+    margin: 0;
+
+    font-size: 1.55rem;
+
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+
+.section-heading-shelf {
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.section-heading-shelf::after {
+    content: "";
+
+    position: absolute;
+}
+
+
+.section-count {
+    margin: 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * New member form
+ * ------------------------------------------------------------
+ */
+
+.add-user-section {
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(213, 163, 63, 0.05),
+            transparent 45%
+        ),
+        var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-accent-red);
+}
+
+
+.add-user-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 18px;
+}
+
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.form-field label {
+    color: var(--color-text-muted);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+
+.form-field input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background: var(--color-background);
+    color: var(--color-text);
+
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+
+    outline: none;
+
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+
+.form-field input::placeholder {
+    color: #756e67;
+}
+
+
+.form-field input:focus {
+    border-color: var(--color-accent-gold);
+
+    box-shadow:
+        0 0 0 3px rgba(213, 163, 63, 0.1);
+}
+
+
+/*
+ * Main application action button.
+ */
+.primary-button {
+    min-height: 48px;
+
+    padding: 0 22px;
+
+    background: var(--color-accent-gold);
+    color: #18130d;
+
+    border: 1px solid var(--color-accent-gold);
+    border-radius: 2px;
+
+    font-size: 0.75rem;
+    font-weight: 800;
+
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        transform 160ms ease,
+        background 160ms ease;
+}
+
+
+.primary-button:hover {
+    background: #e0b152;
+
+    transform: translateY(-2px);
+}
+
+
+.primary-button:focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 4px;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Member directory
+ * ------------------------------------------------------------
+ */
+
+.user-list {
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(280px, 1fr)
+        );
+
+    gap: 24px;
+
+    list-style: none;
+}
+
+
+.user-entry {
+    min-width: 0;
+}
+
+
+/*
+ * Member cards are inspired by classic video-store membership cards.
+ *
+ * The card remains deliberately restrained so that the retro character
+ * comes from typography, borders and layout instead of heavy textures.
+ */
+.user-card {
+    position: relative;
+    overflow: hidden;
+
+    height: 100%;
+    min-height: 330px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.025),
+            transparent 45%
+        ),
+        var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-top: 4px solid var(--color-accent-gold);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.2);
+
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+
+/*
+ * A subtle vertical accent gives the card the appearance of a
+ * designed membership pass rather than a generic content box.
+ */
+.user-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 4px;
+
+    background: var(--color-accent-red);
+}
+
+
+.user-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #51483f;
+
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.3);
+}
+
+
+/*
+ * Upper identification area.
+ */
+.member-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+
+.member-card-brand,
+.member-card-type,
+.member-label,
+.member-description {
+    margin: 0;
+}
+
+
+.member-card-brand {
+    color: var(--color-text);
+
+    font-size: 0.68rem;
+    font-weight: 800;
+
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+
+.member-card-type {
+    margin-top: 4px;
+
+    color: var(--color-accent-gold);
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+
+.member-status {
+    padding: 4px 7px;
+
+    color: var(--color-text-muted);
+
+    border: 1px solid var(--color-border);
+
+    font-size: 0.6rem;
+    font-weight: 700;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * Main member identity area.
+ */
+.user-content {
+    margin: auto 0;
+    padding: 34px 0 30px;
+
+    /*
+     * Allows the flex item to shrink inside the member card.
+     * Without this, very long names can force the card wider
+     * than its available space.
+     */
+    min-width: 0;
+}
+
+
+.member-label {
+    margin-bottom: 5px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+
+.user-content h3 {
+    margin: 0;
+
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: clamp(1.55rem, 4vw, 2.2rem);
+    line-height: 1.05;
+
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+
+    /*
+     * Breaks unusually long names when necessary instead of
+     * allowing them to overflow the membership card.
+     */
+    overflow-wrap: anywhere;
+}
+
+
+.member-description {
+    margin-top: 10px;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.85rem;
+}
+
+
+/*
+ * Lower card information and primary action.
+ */
+.member-card-footer {
+    padding-top: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+
+    border-top: 1px solid var(--color-border);
+}
+
+
+.member-id {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.member-id span {
+    color: var(--color-text-muted);
+
+    font-size: 0.58rem;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+
+.member-id strong {
+    color: var(--color-accent-gold);
+
+    font-size: 0.95rem;
+
+    letter-spacing: 0.12em;
+}
+
+
+.user-movies-link {
+    color: var(--color-text);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+    text-align: right;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    transition:
+        color 160ms ease,
+        transform 160ms ease;
+}
+
+
+.user-movies-link span {
+    color: var(--color-accent-gold);
+}
+
+
+.user-movies-link:hover {
+    color: var(--color-accent-gold);
+}
+
+
+/*
+ * Removing a member is intentionally visually secondary.
+ *
+ * Opening the collection is the main action of the card.
+ */
+.delete-user-form {
+    margin-top: 18px;
+}
+
+
+.delete-user-button {
+    padding: 0;
+
+    background: transparent;
+    color: #8d8279;
+
+    border: 0;
+
+    font-size: 0.62rem;
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease;
+}
+
+
+.delete-user-button:hover,
+.delete-user-button:focus-visible {
+    color: #df6a60;
+}
+
+
+.delete-user-button:focus-visible {
+    outline: 1px solid #df6a60;
+    outline-offset: 4px;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Empty member directory
+ * ------------------------------------------------------------
+ */
+
+.empty-users-message {
+    padding: 40px;
+
+    background: var(--color-surface);
+
+    border: 1px dashed var(--color-border);
+
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+
+.empty-users-message p {
+    margin: 0;
+}
+
+
+.empty-users-message p + p {
+    margin-top: 8px;
+}
+
+
+.empty-state-title {
+    color: var(--color-text);
+
+    font-size: 0.85rem;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Member page responsive adjustments
+ * ------------------------------------------------------------
+ */
+
+@media (max-width: 720px) {
+    .users-page {
+        gap: 36px;
+    }
+
+    .add-user-section {
+        padding: 22px;
+    }
+
+    .add-user-form {
+        grid-template-columns: 1fr;
+    }
+
+    .primary-button {
+        width: 100%;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+
+@media (max-width: 420px) {
+    .user-list {
+        grid-template-columns: 1fr;
+    }
+
+    .user-card {
+        min-height: 310px;
+        padding: 20px;
+    }
+
+    .member-card-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .user-movies-link {
+        text-align: left;
+    }
+}

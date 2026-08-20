@@ -3,49 +3,115 @@
 {% block content %}
     <section class="users-page">
         <header class="users-header">
-            <h1>Users</h1>
+            <p class="page-kicker">
+                MoviWeb Video Club
+            </p>
 
-            <p>
-                Select a user to view their favorite movies
-                or create a new user.
+            <h1>Video Club Members</h1>
+
+            <p class="page-intro">
+                Choose a member to open their personal movie
+                collection or register a new member.
             </p>
         </header>
 
         <section class="add-user-section">
-            <h2>Add User</h2>
+            <div class="section-heading">
+                <div>
+                    <p class="section-kicker">
+                        New Member Registration
+                    </p>
+
+                    <h2>Join the Club</h2>
+                </div>
+            </div>
 
             <form
                 action="{{ url_for('create_user') }}"
                 method="post"
                 class="add-user-form"
             >
-                <label for="name">
-                    User name
-                </label>
+                <div class="form-field">
+                    <label for="name">
+                        Member name
+                    </label>
 
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter member name"
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+
+                <button
+                    type="submit"
+                    class="primary-button"
                 >
-
-                <button type="submit">
-                    Add User
+                    + Add Member
                 </button>
             </form>
         </section>
 
         <section class="user-list-section">
-            <h2>Existing Users</h2>
+            <div class="section-heading section-heading-shelf">
+                <div>
+                    <p class="section-kicker">
+                        Member Directory
+                    </p>
+
+                    <h2>Members</h2>
+                </div>
+
+                <p class="section-count">
+                    {{ users | length }}
+                    Member{% if users | length != 1 %}s{% endif %}
+                </p>
+            </div>
 
             {% if users %}
                 <ul class="user-list">
                     {% for user in users %}
                         <li class="user-entry">
                             <article class="user-card">
+                                <div class="member-card-top">
+                                    <div>
+                                        <p class="member-card-brand">
+                                            MoviWeb Video Club
+                                        </p>
+
+                                        <p class="member-card-type">
+                                            Member
+                                        </p>
+                                    </div>
+
+                                    <span class="member-status">
+                                        Active
+                                    </span>
+                                </div>
+
                                 <div class="user-content">
+                                    <p class="member-label">
+                                        Member Name
+                                    </p>
+
                                     <h3>{{ user.name }}</h3>
+
+                                    <p class="member-description">
+                                        Personal Movie Collection
+                                    </p>
+                                </div>
+
+                                <div class="member-card-footer">
+                                    <div class="member-id">
+                                        <span>Member ID</span>
+
+                                        <strong>
+                                            {{ "%03d" | format(user.id) }}
+                                        </strong>
+                                    </div>
 
                                     <a
                                         href="{{ url_for(
@@ -54,7 +120,8 @@
                                         ) }}"
                                         class="user-movies-link"
                                     >
-                                        View Movies
+                                        Open Collection
+                                        <span aria-hidden="true">→</span>
                                     </a>
                                 </div>
 
@@ -70,7 +137,7 @@
                                         type="submit"
                                         class="delete-user-button"
                                     >
-                                        Delete User
+                                        Remove Member
                                     </button>
                                 </form>
                             </article>
@@ -79,9 +146,16 @@
                 </ul>
 
             {% else %}
-                <p class="empty-users-message">
-                    No users have been added yet.
-                </p>
+                <div class="empty-users-message">
+                    <p class="empty-state-title">
+                        No Members Yet
+                    </p>
+
+                    <p>
+                        Register the first Video Club member
+                        to start a personal movie collection.
+                    </p>
+                </div>
             {% endif %}
         </section>
     </section>
