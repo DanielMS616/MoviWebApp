@@ -10,10 +10,13 @@
         of using a generic collection heading.
         -->
         <header class="user-movies-header">
-            <p class="page-kicker">
-                Personal Movie Archive
-            </p>
+            <!--
+            The selected user's name and the size of their collection
+            provide the main context for this page.
 
+            movies is already available as a list, so the Jinja length
+            filter can count the collection without another database query.
+            -->
             <div class="collection-title-row">
                 <div class="collection-title">
                     <h1>
@@ -26,12 +29,6 @@
                     </p>
                 </div>
 
-                <!--
-                movies is already available as a list in this template.
-
-                The length filter therefore counts the current collection
-                without requiring another database query.
-                -->
                 <p class="collection-count">
                     {{ movies | length }}
                     Title{% if movies | length != 1 %}s{% endif %}
@@ -39,16 +36,13 @@
             </div>
 
             <!--
-            Search and Explore both keep the selected user_id in their
-            URLs so that new movies can later be added to the correct
-            collection.
+            Search and Explore keep the selected user_id in their URLs.
+
+            This ensures that movies discovered through either path can
+            later be added to the correct user's collection.
             -->
             <div class="movie-discovery">
                 <section class="movie-search-section">
-                    <p class="section-kicker">
-                        Catalog Search
-                    </p>
-
                     <h2>Find a Movie</h2>
 
                     <form
@@ -77,21 +71,17 @@
                             >
 
                             <button type="submit">
-                                Search Catalog
+                                Search
                             </button>
                         </div>
                     </form>
                 </section>
 
                 <section class="movie-explore-section">
-                    <p class="section-kicker">
-                        Discover Something New
-                    </p>
-
                     <h2>Explore the Shelves</h2>
 
                     <p>
-                        Browse 100 curated films from cult classics
+                        Browse curated films from cult classics
                         to science fiction and arthouse cinema.
                     </p>
 
@@ -111,18 +101,7 @@
 
         <section class="favorites-section">
             <div class="section-heading section-heading-shelf">
-                <div>
-                    <p class="section-kicker">
-                        MoviWeb Video Club
-                    </p>
-
-                    <h2>Your Collection</h2>
-                </div>
-
-                <p class="section-count">
-                    {{ movies | length }}
-                    Title{% if movies | length != 1 %}s{% endif %}
-                </p>
+                <h2>Your Collection</h2>
             </div>
 
             {% if movies %}
