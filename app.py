@@ -329,6 +329,13 @@ def get_movies(user_id):
 def search_movies(user_id):
     """Searches OMDb and displays matching movie results."""
 
+    # Loads the user whose movie collection started the search.
+    user = data_manager.get_user(user_id)
+
+    # A movie search cannot belong to a user that does not exist.
+    if not user:
+        abort(404)
+
     # Search uses GET, so the search term is read from the URL
     # query parameters instead of request.form.
     query = request.args.get("query", "").strip()
@@ -351,6 +358,7 @@ def search_movies(user_id):
     if not api_key:
         return render_template(
             "search_results.html",
+            user=user,
             user_id=user_id,
             query=query,
             search_results=[],
@@ -391,6 +399,7 @@ def search_movies(user_id):
 
         return render_template(
             "search_results.html",
+            user=user,
             user_id=user_id,
             query=query,
             search_results=[],
@@ -416,6 +425,7 @@ def search_movies(user_id):
 
         return render_template(
             "search_results.html",
+            user=user,
             user_id=user_id,
             query=query,
             search_results=[],
@@ -439,6 +449,7 @@ def search_movies(user_id):
 
     return render_template(
         "search_results.html",
+        user=user,
         user_id=user_id,
         query=query,
         search_results=search_results,
@@ -453,6 +464,13 @@ def search_movies(user_id):
 )
 def explore_movies(user_id):
     """Displays MoviWeb's curated movie recommendations."""
+
+    # Loads the user whose collection the recommendations belong to.
+    user = data_manager.get_user(user_id)
+
+    # Recommendations cannot belong to a user that does not exist.
+    if not user:
+        abort(404)
 
     # Builds the absolute path to the local recommendation file.
     # Using basedir keeps the path independent of the directory
@@ -499,6 +517,7 @@ def explore_movies(user_id):
 
     return render_template(
         "explore.html",
+        user=user,
         user_id=user_id,
         movie_suggestions=movie_suggestions
     )
