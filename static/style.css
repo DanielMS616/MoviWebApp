@@ -1258,7 +1258,7 @@ input {
 
     grid-template-columns:
         repeat(
-            auto-fit,
+            auto-fill,
             minmax(220px, 1fr)
         );
 
