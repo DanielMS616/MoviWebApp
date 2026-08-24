@@ -129,12 +129,53 @@ function restoreMovieScrollPosition() {
 
 
 /*
+ * Replaces one broken remote movie poster with MoviWeb's existing
+ * poster placeholder.
+ *
+ * Keeping this logic in its own function lets us use it both when
+ * a new image error occurs and when an image already failed before
+ * JavaScript attached its event listener.
+ */
+function showPosterFallback(poster) {
+    const posterFrame = poster.closest(
+        ".movie-poster-frame"
+    );
+
+    if (!posterFrame) {
+        return;
+    }
+
+    const fallback = posterFrame.querySelector(
+        ".movie-poster-fallback"
+    );
+
+    if (!fallback) {
+        return;
+    }
+
+    poster.style.display = "none";
+
+    fallback.classList.add(
+        "is-visible"
+    );
+
+    fallback.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+}
+
+
+/*
  * Replaces broken remote movie posters with MoviWeb's existing
  * poster placeholder.
  *
  * OMDb can provide a poster URL even when the image behind that
- * URL is no longer available. The browser's error event lets us
- * detect this case without another network request to OMDb.
+ * URL is no longer available.
+ *
+ * The error listener handles images that fail after this function
+ * runs. The complete/naturalWidth check also handles images that
+ * already failed before JavaScript attached the listener.
  */
 function setupPosterFallbacks() {
     const posters = document.querySelectorAll(
@@ -142,31 +183,33 @@ function setupPosterFallbacks() {
     );
 
     posters.forEach((poster) => {
-        poster.addEventListener("error", () => {
-            const posterFrame = poster.closest(
-                ".movie-poster-frame"
+        /*
+         * Handles poster errors that happen after the listener has
+         * been registered.
+         */
+        poster.addEventListener(
+            "error",
+            () => showPosterFallback(poster)
+        );
+
+        /*
+         * Browsers may start loading images while the HTML is still
+         * being parsed.
+         *
+         * A broken image can therefore fail before this JavaScript
+         * code attaches the error listener.
+         *
+         * complete tells us that the loading attempt has finished.
+         * naturalWidth === 0 means that no usable image was loaded.
+         */
+        if (
+            poster.complete
+            && poster.naturalWidth === 0
+        ) {
+            showPosterFallback(
+                poster
             );
-
-            if (!posterFrame) {
-                return;
-            }
-
-            const fallback = posterFrame.querySelector(
-                ".movie-poster-fallback"
-            );
-
-            if (!fallback) {
-                return;
-            }
-
-            poster.style.display = "none";
-
-            fallback.classList.add("is-visible");
-            fallback.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-        });
+        }
     });
 }
 
