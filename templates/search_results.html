@@ -140,34 +140,99 @@
                     <ul class="search-results">
                         {% for result in search_results %}
                             <li class="search-result">
-                                <article class="search-result-card">
-                                    {% if result.Poster != "N/A" %}
-                                        <img
-                                            src="{{ result.Poster }}"
-                                            alt="Poster for {{ result.Title }}"
-                                            class="search-result-poster"
-                                        >
-                                    {% endif %}
+                                <!--
+                                movie-card provides the shared visual base
+                                that is also used by stored collection movies.
 
-                                    <div class="search-result-content">
-                                        <h3>{{ result.Title }}</h3>
+                                search-result-card marks this card as a
+                                temporary OMDb search result.
+                                -->
+                                <article
+                                    class="movie-card search-result-card"
+                                >
+                                    <div class="movie-case-top">
+                                        <span class="movie-case-label">
+                                            Catalog Result
+                                        </span>
+                                    </div>
 
-                                        <p>
-                                            <strong>Year:</strong>
-                                            {{ result.Year }}
-                                        </p>
+                                    <!--
+                                    Every result receives the same poster
+                                    frame.
+
+                                    If OMDb has no poster, the placeholder
+                                    keeps the card size consistent.
+                                    -->
+                                    <div class="movie-poster-frame">
+                                        {% if result.Poster != "N/A" %}
+                                            <img
+                                                src="{{ result.Poster }}"
+                                                alt="Poster for {{ result.Title }}"
+                                                class="movie-poster"
+                                            >
+                                        {% else %}
+                                            <div
+                                                class="movie-poster-placeholder"
+                                                aria-label="No poster available"
+                                            >
+                                                <span>
+                                                    MoviWeb
+                                                </span>
+
+                                                <strong>
+                                                    No Poster
+                                                </strong>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="movie-content">
+                                        <!--
+                                        A fixed title area helps cards in the
+                                        same row stay visually aligned when
+                                        movie titles have different lengths.
+                                        -->
+                                        <div class="movie-title-block">
+                                            <h3>
+                                                {{ result.Title }}
+                                            </h3>
+                                        </div>
 
                                         <!--
-                                        The IMDb ID uniquely identifies the
-                                        selected OMDb result.
+                                        Search results currently provide only
+                                        the year as additional card metadata.
 
-                                        It is submitted instead of relying
-                                        only on the movie title.
+                                        More detailed movie data is loaded only
+                                        after Add Movie is selected.
+                                        -->
+                                        <div class="movie-details">
+                                            <p>
+                                                <span>Year</span>
+
+                                                <strong>
+                                                    {{ result.Year }}
+                                                </strong>
+                                            </p>
+                                        </div>
+
+                                        <!--
+                                        movie-actions pushes the action area
+                                        toward the bottom of the card.
+
+                                        This keeps Add Movie aligned even when
+                                        titles have different lengths.
                                         -->
                                         <div
                                             id="movie-{{ result.imdbID }}"
-                                            class="movie-action-area"
+                                            class="movie-actions movie-action-area"
                                         >
+                                            <!--
+                                            The IMDb ID uniquely identifies the
+                                            selected OMDb result.
+
+                                            It is submitted instead of relying
+                                            only on the movie title.
+                                            -->
                                             <form
                                                 action="{{ url_for(
                                                     'add_movie',
@@ -200,7 +265,7 @@
                                                 >
 
                                                 <button type="submit">
-                                                    Add Movie
+                                                    Add to Collection
                                                 </button>
                                             </form>
 
@@ -233,8 +298,6 @@
             </section>
 
             <!--
-            Only one back link is necessary.
-
             Search belongs to the selected user's collection, so the
             link returns directly to that collection.
             -->
