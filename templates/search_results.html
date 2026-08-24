@@ -157,20 +157,57 @@
                                     </div>
 
                                     <!--
-                                    Every result receives the same poster
-                                    frame.
+                                    Every search result receives the same
+                                    poster frame.
 
-                                    If OMDb has no poster, the placeholder
-                                    keeps the card size consistent.
+                                    OMDb can either report that no poster is
+                                    available or provide a poster URL that
+                                    later fails to load in the browser.
+
+                                    The second case is handled by JavaScript
+                                    without requiring another OMDb request.
                                     -->
                                     <div class="movie-poster-frame">
                                         {% if result.Poster != "N/A" %}
+                                            <!--
+                                            The fallback is prepared together
+                                            with the image but remains hidden
+                                            while the poster loads correctly.
+
+                                            JavaScript switches to the fallback
+                                            if the image fires an error event.
+                                            -->
                                             <img
                                                 src="{{ result.Poster }}"
                                                 alt="Poster for {{ result.Title }}"
-                                                class="movie-poster"
+                                                class="
+                                                    movie-poster
+                                                    movie-poster-with-fallback
+                                                "
                                             >
+
+                                            <div
+                                                class="
+                                                    movie-poster-placeholder
+                                                    movie-poster-fallback
+                                                "
+                                                aria-hidden="true"
+                                            >
+                                                <span>
+                                                    MoviWeb
+                                                </span>
+
+                                                <strong>
+                                                    No Poster
+                                                </strong>
+                                            </div>
+
                                         {% else %}
+                                            <!--
+                                            When OMDb explicitly returns N/A,
+                                            no image request is necessary and
+                                            the placeholder is shown directly.
+                                            -->
                                             <div
                                                 class="movie-poster-placeholder"
                                                 aria-label="No poster available"
@@ -224,7 +261,10 @@
                                         -->
                                         <div
                                             id="movie-{{ result.imdbID }}"
-                                            class="movie-actions movie-action-area"
+                                            class="
+                                                movie-actions
+                                                movie-action-area
+                                            "
                                         >
                                             <!--
                                             The IMDb ID uniquely identifies the
@@ -276,7 +316,10 @@
                                             {% for category, message in messages %}
                                                 {% if message.imdb_id == result.imdbID %}
                                                     <div
-                                                        class="flash-message flash-{{ category }}"
+                                                        class="
+                                                            flash-message
+                                                            flash-{{ category }}
+                                                        "
                                                         role="status"
                                                     >
                                                         {{ message.text }}

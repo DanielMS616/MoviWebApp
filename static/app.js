@@ -129,6 +129,52 @@ function restoreMovieScrollPosition() {
 
 
 /*
+ * Replaces broken remote movie posters with MoviWeb's existing
+ * poster placeholder.
+ *
+ * OMDb can provide a poster URL even when the image behind that
+ * URL is no longer available. The browser's error event lets us
+ * detect this case without another network request to OMDb.
+ */
+function setupPosterFallbacks() {
+    const posters = document.querySelectorAll(
+        ".movie-poster-with-fallback"
+    );
+
+    posters.forEach((poster) => {
+        poster.addEventListener("error", () => {
+            const posterFrame = poster.closest(
+                ".movie-poster-frame"
+            );
+
+            if (!posterFrame) {
+                return;
+            }
+
+            const fallback = posterFrame.querySelector(
+                ".movie-poster-fallback"
+            );
+
+            if (!fallback) {
+                return;
+            }
+
+            poster.style.display = "none";
+
+            fallback.classList.add("is-visible");
+            fallback.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+        });
+    });
+}
+
+
+setupPosterFallbacks();
+
+
+/*
  * Add Movie and Update Movie both reload a page on which the same
  * movie still exists. Their forms therefore use the same position
  * preservation mechanism.
