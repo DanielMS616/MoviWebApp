@@ -132,10 +132,14 @@
 
                 {% elif search_results %}
                     <!--
-                    Search results are temporary OMDb data.
+                    Search results start as temporary OMDb search data.
 
-                    They are not stored as Movie objects until the user
-                    chooses Add Movie.
+                    Before this template is rendered, the backend enriches
+                    each result with optional detail information such as
+                    director, runtime, IMDb rating and genre.
+
+                    A failed detail request does not remove the result.
+                    The available basic information can still be displayed.
                     -->
                     <ul class="search-results">
                         {% for result in search_results %}
@@ -225,22 +229,33 @@
 
                                     <div class="movie-content">
                                         <!--
-                                        A fixed title area helps cards in the
-                                        same row stay visually aligned when
-                                        movie titles have different lengths.
+                                        The title and optional director use
+                                        the same structure as collection cards.
+
+                                        Keeping this structure consistent makes
+                                        both pages feel like parts of the same
+                                        application.
                                         -->
                                         <div class="movie-title-block">
                                             <h3>
                                                 {{ result.Title }}
                                             </h3>
+
+                                            {% if result.director %}
+                                                <p class="movie-director">
+                                                    {{ result.director }}
+                                                </p>
+                                            {% endif %}
                                         </div>
 
                                         <!--
-                                        Search results currently provide only
-                                        the year as additional card metadata.
+                                        Year comes from the original OMDb
+                                        search response.
 
-                                        More detailed movie data is loaded only
-                                        after Add Movie is selected.
+                                        Runtime and IMDb rating are optional
+                                        values added by enrich_search_results().
+                                        They are displayed only when usable
+                                        detail data was available.
                                         -->
                                         <div class="movie-details">
                                             <p>
@@ -250,14 +265,46 @@
                                                     {{ result.Year }}
                                                 </strong>
                                             </p>
+
+                                            {% if result.runtime_minutes %}
+                                                <p>
+                                                    <span>Runtime</span>
+
+                                                    <strong>
+                                                        {{ result.runtime_minutes }} min
+                                                    </strong>
+                                                </p>
+                                            {% endif %}
+
+                                            {% if result.imdb_rating is not none %}
+                                                <p>
+                                                    <span>IMDb</span>
+
+                                                    <strong>
+                                                        {{ result.imdb_rating }}
+                                                    </strong>
+                                                </p>
+                                            {% endif %}
                                         </div>
+
+                                        <!--
+                                        Genre is also optional detail data.
+
+                                        The existing movie-genre class is
+                                        shared with collection cards.
+                                        -->
+                                        {% if result.genre %}
+                                            <p class="movie-genre">
+                                                {{ result.genre }}
+                                            </p>
+                                        {% endif %}
 
                                         <!--
                                         movie-actions pushes the action area
                                         toward the bottom of the card.
 
-                                        This keeps Add Movie aligned even when
-                                        titles have different lengths.
+                                        This keeps Add to Collection aligned
+                                        even when optional details are missing.
                                         -->
                                         <div
                                             id="movie-{{ result.imdbID }}"
