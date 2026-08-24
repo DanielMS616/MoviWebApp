@@ -3,16 +3,89 @@
 {% block content %}
     {% with messages = get_flashed_messages(with_categories=true) %}
         <section class="search-results-page">
-            <a
-                href="{{ url_for(
-                    'get_movies',
-                    user_id=user_id
-                ) }}"
-                class="back-link"
-            >
-                ← Back to Favorites
-            </a>
+            <!--
+            The search route passes the selected User object to this
+            template.
 
+            This keeps the search page connected to the collection
+            from which the user started the search.
+            -->
+            <header class="search-results-header">
+                <div class="search-title-row">
+                    <div class="search-title">
+                        <h1>
+                            {{ user.name }}'s Movie Search
+                        </h1>
+
+                        <p class="page-intro">
+                            Find movies to add to your personal collection.
+                        </p>
+                    </div>
+
+                    <!--
+                    OMDb returns the total number of matching movies.
+
+                    The count is only displayed when the search itself
+                    completed successfully.
+                    -->
+                    {% if not search_error %}
+                        <p class="search-result-count">
+                            {{ total_results }}
+                            Result{% if total_results != 1 %}s{% endif %}
+                        </p>
+                    {% endif %}
+                </div>
+
+                <!--
+                The search form uses GET because searching does not
+                change stored application data.
+
+                The query therefore becomes part of the URL.
+                -->
+                <section class="search-again-section">
+                    <h2>Find a Movie</h2>
+
+                    <form
+                        action="{{ url_for(
+                            'search_movies',
+                            user_id=user_id
+                        ) }}"
+                        method="get"
+                        class="movie-search-form"
+                    >
+                        <label for="query">
+                            Movie title
+                        </label>
+
+                        <!--
+                        movie-search-controls is also used on the
+                        collection page.
+
+                        Reusing it keeps the search field and button
+                        consistent across both pages.
+                        -->
+                        <div class="movie-search-controls">
+                            <input
+                                type="text"
+                                id="query"
+                                name="query"
+                                value="{{ query }}"
+                                placeholder="Search the catalog"
+                                required
+                            >
+
+                            <button type="submit">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            </header>
+
+            <!--
+            Messages without an IMDb ID belong to the complete search
+            page instead of one specific movie result.
+            -->
             {% for category, message in messages %}
                 {% if not message.imdb_id %}
                     <div
@@ -24,39 +97,33 @@
                 {% endif %}
             {% endfor %}
 
-            <header class="search-results-header">
-                <h1>Search Movies</h1>
-
-                <form
-                    action="{{ url_for(
-                        'search_movies',
-                        user_id=user_id
-                    ) }}"
-                    method="get"
-                    class="movie-search-form"
-                >
-                    <label for="query">
-                        Movie title
-                    </label>
-
-                    <input
-                        type="text"
-                        id="query"
-                        name="query"
-                        value="{{ query }}"
-                        required
-                    >
-
-                    <button type="submit">
-                        Search
-                    </button>
-                </form>
-            </header>
-
             <section class="search-results-section">
-                <h2>
-                    Search Results for "{{ query }}"
-                </h2>
+                <div class="search-results-heading">
+                    <h2>
+                        Search Results for "{{ query }}"
+                    </h2>
+
+                    <!--
+                    OMDb can report more matching movies than the first
+                    page of results that MoviWeb currently requests.
+
+                    The summary makes this difference visible to the user.
+                    -->
+                    {% if not search_error and search_results %}
+                        <p class="search-summary">
+                            {% if total_results > search_results | length %}
+                                Showing the first
+                                {{ search_results | length }}
+                                of {{ total_results }} matching movies.
+                            {% else %}
+                                {{ total_results }}
+                                matching
+                                movie{% if total_results != 1 %}s{% endif %}
+                                found.
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                </div>
 
                 {% if search_error %}
                     <p class="search-message">
@@ -64,16 +131,12 @@
                     </p>
 
                 {% elif search_results %}
-                    <p class="search-summary">
-                        {{ total_results }} movies found.
+                    <!--
+                    Search results are temporary OMDb data.
 
-                        {% if total_results > search_results | length %}
-                            Showing the first
-                            {{ search_results | length }}
-                            results.
-                        {% endif %}
-                    </p>
-
+                    They are not stored as Movie objects until the user
+                    chooses Add Movie.
+                    -->
                     <ul class="search-results">
                         {% for result in search_results %}
                             <li class="search-result">
@@ -94,6 +157,13 @@
                                             {{ result.Year }}
                                         </p>
 
+                                        <!--
+                                        The IMDb ID uniquely identifies the
+                                        selected OMDb result.
+
+                                        It is submitted instead of relying
+                                        only on the movie title.
+                                        -->
                                         <div
                                             id="movie-{{ result.imdbID }}"
                                             class="movie-action-area"
@@ -112,6 +182,11 @@
                                                     value="{{ result.imdbID }}"
                                                 >
 
+                                                <!--
+                                                source and query allow the
+                                                backend to return to the same
+                                                search after adding a movie.
+                                                -->
                                                 <input
                                                     type="hidden"
                                                     name="source"
@@ -129,6 +204,10 @@
                                                 </button>
                                             </form>
 
+                                            <!--
+                                            Messages containing an IMDb ID
+                                            belong to one specific result card.
+                                            -->
                                             {% for category, message in messages %}
                                                 {% if message.imdb_id == result.imdbID %}
                                                     <div
@@ -153,6 +232,12 @@
                 {% endif %}
             </section>
 
+            <!--
+            Only one back link is necessary.
+
+            Search belongs to the selected user's collection, so the
+            link returns directly to that collection.
+            -->
             <a
                 href="{{ url_for(
                     'get_movies',
@@ -160,7 +245,7 @@
                 ) }}"
                 class="back-link"
             >
-                ← Back to Favorites
+                ← Back to Collection
             </a>
         </section>
     {% endwith %}
