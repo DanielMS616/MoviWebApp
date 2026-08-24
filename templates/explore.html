@@ -3,16 +3,40 @@
 {% block content %}
     {% with messages = get_flashed_messages(with_categories=true) %}
         <section class="explore-page">
-            <a
-                href="{{ url_for(
-                    'get_movies',
-                    user_id=user_id
-                ) }}"
-                class="back-link"
-            >
-                ← Back to Favorites
-            </a>
+            <!--
+            Explore belongs to the currently selected user.
 
+            The recommendations themselves come from MoviWeb's curated
+            local suggestion list and are not stored in the user's
+            collection until Add to Collection is selected.
+            -->
+            <header class="explore-header">
+                <div class="explore-title-row">
+                    <div class="explore-title">
+                        <h1>
+                            {{ user.name }}'s Explore
+                        </h1>
+
+                        <p class="page-intro">
+                            Discover curated movies across arthouse,
+                            science fiction, AI, hacker culture,
+                            cult classics and popular favorites.
+                        </p>
+                    </div>
+
+                    {% if movie_suggestions %}
+                        <p class="explore-count">
+                            {{ movie_suggestions | length }}
+                            Pick{% if movie_suggestions | length != 1 %}s{% endif %}
+                        </p>
+                    {% endif %}
+                </div>
+            </header>
+
+            <!--
+            Messages without an IMDb ID belong to the complete Explore
+            page rather than to one individual recommendation.
+            -->
             {% for category, message in messages %}
                 {% if not message.imdb_id %}
                     <div
@@ -24,37 +48,107 @@
                 {% endif %}
             {% endfor %}
 
-            <header class="explore-header">
-                <h1>100 Movies to Explore</h1>
-
-                <p>
-                    A curated collection of arthouse films,
-                    science fiction, AI, hacker culture,
-                    cult classics and popular favorites.
-                </p>
-            </header>
-
             {% if movie_suggestions %}
+                <!--
+                Explore recommendations use their own list because the
+                data comes from MoviWeb's curated suggestion file.
+
+                Each recommendation still reuses movie-card so that
+                Search, Explore and Collection share the same DVD-case
+                visual language.
+                -->
                 <ul class="movie-suggestions">
                     {% for movie in movie_suggestions %}
                         <li class="movie-suggestion">
-                            <article class="movie-suggestion-card">
-                                {% if movie.poster_url %}
-                                    <img
-                                        src="{{ movie.poster_url }}"
-                                        alt="Poster for {{ movie.title }}"
-                                        class="movie-suggestion-poster"
-                                    >
-                                {% endif %}
+                            <article
+                                class="movie-card movie-suggestion-card"
+                            >
+                                <div class="movie-case-top">
+                                    <span class="movie-case-label">
+                                        Curated Pick
+                                    </span>
+                                </div>
 
-                                <div class="movie-suggestion-content">
-                                    <h2>{{ movie.title }}</h2>
+                                <!--
+                                A recommendation may have no poster URL or
+                                may contain a remote URL that fails later in
+                                the browser.
 
-                                    <p>
-                                        <strong>Year:</strong>
-                                        {{ movie.year }}
-                                    </p>
+                                The same poster fallback mechanism used on
+                                Search can therefore also be reused here.
+                                -->
+                                <div class="movie-poster-frame">
+                                    {% if movie.poster_url %}
+                                        <img
+                                            src="{{ movie.poster_url }}"
+                                            alt="Poster for {{ movie.title }}"
+                                            class="
+                                                movie-poster
+                                                movie-poster-with-fallback
+                                            "
+                                        >
 
+                                        <div
+                                            class="
+                                                movie-poster-placeholder
+                                                movie-poster-fallback
+                                            "
+                                            aria-hidden="true"
+                                        >
+                                            <span>
+                                                MoviWeb
+                                            </span>
+
+                                            <strong>
+                                                No Poster
+                                            </strong>
+                                        </div>
+
+                                    {% else %}
+                                        <div
+                                            class="movie-poster-placeholder"
+                                            aria-label="No poster available"
+                                        >
+                                            <span>
+                                                MoviWeb
+                                            </span>
+
+                                            <strong>
+                                                No Poster
+                                            </strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="movie-content">
+                                    <!--
+                                    Explore currently knows the movie title
+                                    and year directly from the curated local
+                                    suggestion data.
+                                    -->
+                                    <div class="movie-title-block">
+                                        <h3>
+                                            {{ movie.title }}
+                                        </h3>
+                                    </div>
+
+                                    <div class="movie-details">
+                                        <p>
+                                            <span>Year</span>
+
+                                            <strong>
+                                                {{ movie.year }}
+                                            </strong>
+                                        </p>
+                                    </div>
+
+                                    <!--
+                                    Explore tags describe why a movie belongs
+                                    in the curated recommendation collection.
+
+                                    Unlike OMDb genres, these tags are chosen
+                                    by MoviWeb itself.
+                                    -->
                                     {% if movie.tags %}
                                         <div class="movie-tags">
                                             {% for tag in movie.tags %}
@@ -65,10 +159,23 @@
                                         </div>
                                     {% endif %}
 
+                                    <!--
+                                    movie-actions keeps the Add button near
+                                    the bottom of each card even when titles
+                                    or tag counts differ.
+                                    -->
                                     <div
                                         id="movie-{{ movie.imdb_id }}"
-                                        class="movie-action-area"
+                                        class="
+                                            movie-actions
+                                            movie-action-area
+                                        "
                                     >
+                                        <!--
+                                        The IMDb ID connects the curated
+                                        recommendation to OMDb when the movie
+                                        is actually added to the collection.
+                                        -->
                                         <form
                                             action="{{ url_for(
                                                 'add_movie',
@@ -83,6 +190,14 @@
                                                 value="{{ movie.imdb_id }}"
                                             >
 
+                                            <!--
+                                            source tells the backend that this
+                                            action originated from Explore.
+
+                                            This allows MoviWeb to return to
+                                            the Explore page after the movie
+                                            action has completed.
+                                            -->
                                             <input
                                                 type="hidden"
                                                 name="source"
@@ -90,14 +205,22 @@
                                             >
 
                                             <button type="submit">
-                                                Add Movie
+                                                Add to Collection
                                             </button>
                                         </form>
 
+                                        <!--
+                                        Messages containing an IMDb ID belong
+                                        only to the recommendation that caused
+                                        the movie action.
+                                        -->
                                         {% for category, message in messages %}
                                             {% if message.imdb_id == movie.imdb_id %}
                                                 <div
-                                                    class="flash-message flash-{{ category }}"
+                                                    class="
+                                                        flash-message
+                                                        flash-{{ category }}
+                                                    "
                                                     role="status"
                                                 >
                                                     {{ message.text }}
@@ -117,6 +240,9 @@
                 </p>
             {% endif %}
 
+            <!--
+            Explore belongs to the selected user's movie collection.
+            -->
             <a
                 href="{{ url_for(
                     'get_movies',
@@ -124,7 +250,7 @@
                 ) }}"
                 class="back-link"
             >
-                ← Back to Favorites
+                ← Back to Collection
             </a>
         </section>
     {% endwith %}
