@@ -1246,6 +1246,166 @@ input {
 
 /*
  * ------------------------------------------------------------
+ * Movie search results page
+ * ------------------------------------------------------------
+ */
+
+
+/*
+ * The search page uses the same vertical rhythm as the personal
+ * collection page.
+ *
+ * The individual search result cards receive their own styling
+ * in a later step.
+ */
+.search-results-page {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+/*
+ * The header groups the page title and the search form.
+ *
+ * Keeping both parts together makes it clear that searching is
+ * the main action on this page.
+ */
+.search-results-header {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+
+/*
+ * The title stays on the left while the result count appears on
+ * the right when enough horizontal space is available.
+ */
+.search-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+}
+
+
+.search-title {
+    min-width: 0;
+}
+
+
+.search-title h1 {
+    margin: 0;
+
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: clamp(2rem, 5vw, 3.7rem);
+    line-height: 1;
+
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+
+    /*
+     * Long user names must wrap instead of making the page wider
+     * than the available viewport.
+     */
+    overflow-wrap: anywhere;
+}
+
+
+/*
+ * OMDb may report more matching movies than MoviWeb currently
+ * displays because only the first search result page is loaded.
+ */
+.search-result-count {
+    flex-shrink: 0;
+
+    margin: 0;
+    padding-bottom: 4px;
+
+    color: var(--color-accent-gold);
+
+    font-size: 0.75rem;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * The search form is presented as a compact utility panel.
+ *
+ * The actual form controls reuse .movie-search-form and
+ * .movie-search-controls from the collection page.
+ */
+.search-again-section {
+    padding: 18px 20px;
+
+    background: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-accent-gold);
+}
+
+
+.search-again-section h2 {
+    margin: 0;
+
+    font-size: 1.05rem;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Search result heading
+ * ------------------------------------------------------------
+ */
+
+.search-results-section {
+    min-width: 0;
+}
+
+
+.search-results-heading {
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid var(--color-border);
+}
+
+
+.search-results-heading h2 {
+    margin: 0;
+
+    font-size: 1.15rem;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    overflow-wrap: anywhere;
+}
+
+
+.search-summary {
+    margin: 7px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.8rem;
+    line-height: 1.45;
+}
+
+
+/*
+ * ------------------------------------------------------------
  * DVD shelf
  * ------------------------------------------------------------
  */
@@ -1783,6 +1943,12 @@ input {
         gap: 16px;
     }
 
+    .search-title-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+
     .movie-discovery {
         grid-template-columns: 1fr;
     }
@@ -1809,6 +1975,10 @@ input {
 
     .movie-search-section,
     .movie-explore-section {
+        padding: 16px;
+    }
+
+    .search-again-section {
         padding: 16px;
     }
 }
