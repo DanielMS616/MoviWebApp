@@ -144,6 +144,123 @@ def parse_imdb_rating(rating):
         return None
 
 
+def enrich_search_results(search_results, api_key):
+    """
+    Adds optional OMDb detail data to movie search results.
+
+    The normal OMDb search response contains only basic information
+    such as title, year, poster URL and IMDb ID.
+
+    MoviWeb therefore requests the detail data for each displayed
+    result separately.
+
+    If one detail request fails, the basic search result remains
+    usable. Optional information should not make the complete movie
+    search fail.
+    """
+
+    # A new list keeps the original OMDb search results unchanged.
+    enriched_results = []
+
+    for result in search_results:
+        # copy() creates a separate dictionary for this result.
+        #
+        # This allows MoviWeb to add its own normalized fields without
+        # modifying the original dictionary returned by OMDb.
+        enriched_result = result.copy()
+
+        # These optional fields always exist in the enriched result.
+        #
+        # None means that the information is unavailable or that the
+        # individual detail request failed.
+        enriched_result["director"] = None
+        enriched_result["genre"] = None
+        enriched_result["runtime_minutes"] = None
+        enriched_result["imdb_rating"] = None
+
+        # The IMDb ID uniquely identifies the movie for the detail
+        # request.
+        imdb_id = normalize_omdb_value(
+            result.get("imdbID")
+        )
+
+        # Without an IMDb ID, no detail request can be made.
+        # The original search result is still useful and remains visible.
+        if imdb_id is None:
+            enriched_results.append(
+                enriched_result
+            )
+            continue
+
+        try:
+            # OMDb's "i" parameter requests one specific movie by its
+            # IMDb ID.
+            response = requests.get(
+                "https://www.omdbapi.com/",
+                params={
+                    "apikey": api_key,
+                    "i": imdb_id
+                },
+                timeout=5
+            )
+
+            # HTTP errors such as 500 or 503 become exceptions and are
+            # handled below.
+            response.raise_for_status()
+
+            # Converts the returned JSON object into a Python dictionary.
+            detail_data = response.json()
+
+        # Detail information is optional for the search page.
+        #
+        # A connection problem or malformed JSON for one movie should
+        # therefore not make all search results unavailable.
+        except (requests.RequestException, ValueError) as error:
+            print(
+                "OMDb detail request failed "
+                f"for {imdb_id}: {error}"
+            )
+
+            enriched_results.append(
+                enriched_result
+            )
+            continue
+
+        # OMDb can return HTTP 200 while still reporting an API-level
+        # error inside the JSON response.
+        if detail_data.get("Response") == "False":
+            enriched_results.append(
+                enriched_result
+            )
+            continue
+
+        # The existing helper converts "N/A", empty strings and other
+        # missing values into Python None.
+        enriched_result["director"] = normalize_omdb_value(
+            detail_data.get("Director")
+        )
+
+        enriched_result["genre"] = normalize_omdb_value(
+            detail_data.get("Genre")
+        )
+
+        # Runtime and IMDb rating need additional conversion because
+        # MoviWeb uses numbers instead of OMDb's raw strings.
+        enriched_result["runtime_minutes"] = parse_runtime(
+            detail_data.get("Runtime")
+        )
+
+        enriched_result["imdb_rating"] = parse_imdb_rating(
+            detail_data.get("imdbRating")
+        )
+
+        enriched_results.append(
+            enriched_result
+        )
+
+    return enriched_results
+
+
 def flash_movie_message(text, category, imdb_id=None):
     """
     Stores feedback for a movie action in Flask's flash session.
@@ -435,6 +552,16 @@ def search_movies(user_id):
 
     # OMDb stores successful search matches inside the "Search" list.
     search_results = search_data.get("Search", [])
+
+    # The basic search results are enriched with optional detail data
+    # such as director, genre, runtime and IMDb rating.
+    #
+    # A failed detail request affects only that individual movie and
+    # does not make the complete search fail.
+    search_results = enrich_search_results(
+        search_results,
+        api_key
+    )
 
     # OMDb normally returns totalResults as a string.
     # If the value is unexpectedly invalid, the number of results
