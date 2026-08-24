@@ -2088,6 +2088,234 @@ input {
 
 /*
  * ------------------------------------------------------------
+ * Movie explore page
+ * ------------------------------------------------------------
+ */
+
+
+/*
+ * Explore uses the same overall vertical spacing as Collection
+ * and Search.
+ */
+.explore-page {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Explore header
+ * ------------------------------------------------------------
+ */
+
+
+/*
+ * The title and recommendation count share one row on larger
+ * screens.
+ */
+.explore-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+}
+
+
+.explore-title {
+    min-width: 0;
+}
+
+
+.explore-title h1 {
+    margin: 0;
+
+    font-family:
+        "Arial Black",
+        "Trebuchet MS",
+        sans-serif;
+
+    font-size: clamp(2rem, 5vw, 3.7rem);
+    line-height: 1;
+
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+
+    /*
+     * Long member names may wrap instead of forcing the page
+     * beyond the available screen width.
+     */
+    overflow-wrap: anywhere;
+}
+
+
+/*
+ * The count shows how many recommendations are currently available
+ * on the Explore page.
+ *
+ * Red distinguishes the curated Explore area from the gold search
+ * and collection accents.
+ */
+.explore-count {
+    flex-shrink: 0;
+
+    margin: 0;
+    padding-bottom: 4px;
+
+    color: var(--color-accent-gold);
+
+    font-size: 0.75rem;
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Explore recommendation grid
+ * ------------------------------------------------------------
+ */
+
+
+/*
+ * Explore uses the same shelf dimensions as Collection and Search.
+ *
+ * auto-fill keeps unused columns available so a small number of
+ * recommendations does not create unusually wide movie cards.
+ */
+.movie-suggestions {
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(220px, 1fr)
+        );
+
+    align-items: stretch;
+
+    gap: 30px;
+
+    list-style: none;
+}
+
+
+.movie-suggestion {
+    min-width: 0;
+    height: 100%;
+}
+
+
+/*
+ * movie-card already supplies the common DVD-case appearance.
+ *
+ * movie-suggestion-card contains only Explore-specific adjustments.
+ */
+.movie-suggestion-card {
+    height: 100%;
+}
+
+
+/*
+ * The red label gives curated recommendations a small visual
+ * distinction from normal catalog search results.
+ */
+.movie-suggestion-card .movie-case-label {
+    color: var(--color-accent-gold);
+}
+
+
+/*
+ * A fixed title area helps recommendation cards remain aligned even
+ * when movie titles have different lengths.
+ */
+.movie-suggestion-card .movie-title-block {
+    height: 3.2rem;
+}
+
+
+.movie-suggestion-card .movie-details {
+    margin-top: 14px;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Explore tags
+ * ------------------------------------------------------------
+ */
+
+
+/*
+ * Tags explain why MoviWeb included a movie in the curated list.
+ *
+ * They may contain several values, so flex-wrap allows them to move
+ * onto another line without widening the movie card.
+ */
+.movie-tags {
+    margin-top: 14px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+
+/*
+ * Explore tags deliberately look like small archive labels rather
+ * than regular movie metadata.
+ */
+.movie-tag {
+    padding: 5px 7px;
+
+    background: var(--color-background);
+    color: var(--color-text-muted);
+
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+
+    font-size: 0.56rem;
+    font-weight: 800;
+
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+
+/*
+ * ------------------------------------------------------------
+ * Explore feedback
+ * ------------------------------------------------------------
+ */
+
+
+/*
+ * If the curated recommendation file contains no movies, Explore
+ * still keeps the normal page structure and displays a clear
+ * message instead of an empty area.
+ */
+.explore-message {
+    margin: 0;
+    padding: 24px;
+
+    background: var(--color-surface);
+
+    border: 1px dashed var(--color-border);
+
+    color: var(--color-text-muted);
+
+    text-align: center;
+}
+
+
+/*
+ * ------------------------------------------------------------
  * Empty collection and navigation
  * ------------------------------------------------------------
  */
@@ -2153,6 +2381,12 @@ input {
         gap: 16px;
     }
 
+    .explore-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+    }
+
     .movie-discovery {
         grid-template-columns: 1fr;
     }
@@ -2187,7 +2421,12 @@ input {
     }
 
     .search-results {
-    grid-template-columns: 1fr;
-    gap: 24px;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .movie-suggestions {
+        grid-template-columns: 1fr;
+        gap: 24px;
     }
 }
