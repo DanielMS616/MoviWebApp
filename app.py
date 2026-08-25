@@ -631,12 +631,56 @@ def explore_movies(user_id):
     )
 
     # Loads the curated movie collection from the local JSON file.
-    with open(
-        suggestions_path,
-        "r",
-        encoding="utf-8"
-    ) as file:
-        movie_suggestions = json.load(file)
+    #
+    # The recommendation file is part of MoviWeb itself. If it is
+    # missing, unreadable or contains invalid JSON, Explore should
+    # display a controlled error instead of raising an unhandled
+    # exception.
+    try:
+        with open(
+                suggestions_path,
+                "r",
+                encoding="utf-8"
+        ) as file:
+            movie_suggestions = json.load(file)
+
+    except (OSError, json.JSONDecodeError) as error:
+        print(
+            "Explore recommendation file could not be loaded: "
+            f"{error}"
+        )
+
+        flash_movie_message(
+            "Movie recommendations are currently unavailable.",
+            "error"
+        )
+
+        return render_template(
+            "explore.html",
+            user=user,
+            user_id=user_id,
+            movie_suggestions=[]
+        ), 500
+
+    # Explore expects the JSON file to contain one list of movie
+    # recommendation objects. Valid JSON with another top-level
+    # structure cannot be shuffled or displayed as intended.
+    if not isinstance(movie_suggestions, list):
+        print(
+            "Explore recommendation file has an invalid structure."
+        )
+
+        flash_movie_message(
+            "Movie recommendations are currently unavailable.",
+            "error"
+        )
+
+        return render_template(
+            "explore.html",
+            user=user,
+            user_id=user_id,
+            movie_suggestions=[]
+        ), 500
 
     # preserve_order is only added to the URL when the user returns
     # to Explore after a movie action such as Add Movie.
