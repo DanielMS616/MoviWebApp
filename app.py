@@ -14,6 +14,8 @@ from flask import (
     session,
     url_for
 )
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
 
 from data_manager import DataManager
 from models import db, Movie
@@ -59,6 +61,21 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 # Disables SQLAlchemy's additional modification tracking because
 # MoviWeb does not use this feature.
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+
+# SQLite defines foreign keys in the table schema but does not enforce
+# them automatically for every database connection.
+#
+# SQLAlchemy may open multiple SQLite connections during the lifetime
+# of the application. The connect event therefore enables foreign-key
+# enforcement whenever a new database connection is created.
+@event.listens_for(Engine, "connect")
+def enable_sqlite_foreign_keys(dbapi_connection, connection_record):
+    """Enables SQLite foreign-key enforcement for every new connection."""
+
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
 
 
 # Connects the SQLAlchemy object from models.py to this Flask application.
