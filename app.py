@@ -384,7 +384,12 @@ def delete_user(user_id):
 
     # The DataManager handles both parts of the delete operation:
     # first the user's favorite movies and then the user itself.
-    data_manager.delete_user(user_id)
+    user_deleted = data_manager.delete_user(user_id)
+
+    # A delete request should only succeed when the requested user
+    # actually exists. The custom 404 page handles invalid user IDs.
+    if not user_deleted:
+        abort(404)
 
     # Redirects back to the user overview after the delete request.
     # Using POST prevents a user from being deleted simply by opening
@@ -657,6 +662,14 @@ def explore_movies(user_id):
 def add_movie(user_id):
     """Adds a selected OMDb movie to a user's favorite movies."""
 
+    # A movie can only be added to an existing user's collection.
+    # Checking this before calling OMDb also avoids an unnecessary
+    # external API request for an invalid user ID.
+    user = data_manager.get_user(user_id)
+
+    if not user:
+        abort(404)
+
     # The search or Explore page submits the unique IMDb ID
     # of the movie selected by the user.
     imdb_id = request.form.get("imdb_id", "").strip()
@@ -928,11 +941,17 @@ def update_movie(user_id, movie_id):
     if new_title:
         # Both IDs are passed to the DataManager so that the movie
         # can only be changed through the user it actually belongs to.
-        data_manager.update_movie(
+        movie_updated = data_manager.update_movie(
             user_id,
             movie_id,
             new_title
         )
+
+        # The movie resource exists only when both its ID and user ID
+        # match. A missing movie or a movie owned by another user
+        # therefore produces a 404 response.
+        if not movie_updated:
+            abort(404)
 
     # Returns to the updated favorite movie card.
     # The HTML anchor also provides a useful fallback if JavaScript
@@ -955,10 +974,15 @@ def delete_movie(user_id, movie_id):
 
     # The DataManager checks user_id together with movie_id.
     # This prevents deletion through another user's URL.
-    data_manager.delete_movie(
+    movie_deleted = data_manager.delete_movie(
         user_id,
         movie_id
     )
+
+    # The movie resource exists only inside the collection it belongs to.
+    # Missing movies and movies belonging to another user both return 404.
+    if not movie_deleted:
+        abort(404)
 
     return redirect(
         url_for(

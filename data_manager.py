@@ -104,25 +104,49 @@ class DataManager:
         return True
 
     def update_movie(self, user_id, movie_id, new_title):
-        """Updates a movie only if it belongs to the specified user."""
+        """
+        Updates a movie only if it belongs to the specified user.
 
+        Returns True if the movie was updated and False if no matching
+        movie belongs to the specified user.
+        """
+
+        # Both IDs are part of the lookup.
+        #
+        # This prevents a movie from being changed through another
+        # user's URL simply because the movie ID itself exists.
         movie = Movie.query.filter_by(
             id=movie_id,
             user_id=user_id
         ).first()
 
-        if movie:
-            movie.name = new_title
-            db.session.commit()
+        if not movie:
+            return False
+
+        movie.name = new_title
+        db.session.commit()
+
+        return True
 
     def delete_movie(self, user_id, movie_id):
-        """Deletes a movie only if it belongs to the specified user."""
+        """
+        Deletes a movie only if it belongs to the specified user.
 
+        Returns True if the movie was deleted and False if no matching
+        movie belongs to the specified user.
+        """
+
+        # Both IDs are checked so that a user can only delete movies
+        # that actually belong to their own collection.
         movie = Movie.query.filter_by(
             id=movie_id,
             user_id=user_id
         ).first()
 
-        if movie:
-            db.session.delete(movie)
-            db.session.commit()
+        if not movie:
+            return False
+
+        db.session.delete(movie)
+        db.session.commit()
+
+        return True
