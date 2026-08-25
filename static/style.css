@@ -1047,7 +1047,9 @@ input {
 }
 
 
-.collection-title-row {
+.collection-title-row,
+.search-title-row,
+.explore-title-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -1055,12 +1057,16 @@ input {
 }
 
 
-.collection-title {
+.collection-title,
+.search-title,
+.explore-title {
     min-width: 0;
 }
 
 
-.collection-title h1 {
+.collection-title h1,
+.search-title h1,
+.explore-title h1 {
     margin: 0;
 
     font-family:
@@ -1075,14 +1081,21 @@ input {
     text-transform: uppercase;
 
     /*
-     * Very long member names must be allowed to wrap instead of
-     * forcing the page wider than the available screen.
+     * Long member names must wrap instead of forcing the page
+     * beyond the available viewport width.
      */
     overflow-wrap: anywhere;
 }
 
 
-.collection-count {
+/*
+ * Collection, Search and Explore use the same compact gold counter.
+ *
+ * The text itself remains page-specific: titles, results or picks.
+ */
+.collection-count,
+.search-result-count,
+.explore-count {
     flex-shrink: 0;
 
     margin: 0;
@@ -1127,7 +1140,7 @@ input {
 
 
 .movie-explore-section {
-    border-left: 4px solid var(--color-accent-red);
+    border-left: 4px solid var(--color-accent-gold);
 }
 
 
@@ -1279,65 +1292,6 @@ input {
 
 
 /*
- * The title stays on the left while the result count appears on
- * the right when enough horizontal space is available.
- */
-.search-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 32px;
-}
-
-
-.search-title {
-    min-width: 0;
-}
-
-
-.search-title h1 {
-    margin: 0;
-
-    font-family:
-        "Arial Black",
-        "Trebuchet MS",
-        sans-serif;
-
-    font-size: clamp(2rem, 5vw, 3.7rem);
-    line-height: 1;
-
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-
-    /*
-     * Long user names must wrap instead of making the page wider
-     * than the available viewport.
-     */
-    overflow-wrap: anywhere;
-}
-
-
-/*
- * OMDb may report more matching movies than MoviWeb currently
- * displays because only the first search result page is loaded.
- */
-.search-result-count {
-    flex-shrink: 0;
-
-    margin: 0;
-    padding-bottom: 4px;
-
-    color: var(--color-accent-gold);
-
-    font-size: 0.75rem;
-    font-weight: 800;
-
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-}
-
-
-/*
  * The search form is presented as a compact utility panel.
  *
  * The actual form controls reuse .movie-search-form and
@@ -1406,11 +1360,21 @@ input {
 
 /*
  * ------------------------------------------------------------
- * DVD shelf
+ * Shared movie shelf
  * ------------------------------------------------------------
  */
 
-.movie-list {
+
+/*
+ * Collection, Search and Explore display movie cards on the same
+ * responsive shelf.
+ *
+ * auto-fill keeps unused grid columns available. This prevents a
+ * small number of cards from stretching across the complete page.
+ */
+.movie-list,
+.search-results,
+.movie-suggestions {
     margin: 0;
     padding: 0;
 
@@ -1422,9 +1386,6 @@ input {
             minmax(220px, 1fr)
         );
 
-    /*
-     * Cards in the same shelf row use the same height.
-     */
     align-items: stretch;
 
     gap: 30px;
@@ -1433,7 +1394,9 @@ input {
 }
 
 
-.movie-entry {
+.movie-entry,
+.search-result,
+.movie-suggestion {
     min-width: 0;
     height: 100%;
 }
@@ -1907,73 +1870,38 @@ input {
 
 /*
  * ------------------------------------------------------------
- * Search result cards
+ * Search and Explore card adjustments
  * ------------------------------------------------------------
  */
 
 
 /*
- * Search results use their own grid because they contain temporary
- * OMDb results rather than movies stored in the user's collection.
- *
- * auto-fill keeps empty grid columns available. This prevents one,
- * two or three result cards from becoming unnecessarily wide.
+ * Search and Explore both reuse the shared movie-card DVD case.
+ * These selectors contain only adjustments for temporary cards
+ * that are not yet stored in the user's collection.
  */
-.search-results {
-    margin: 0;
-    padding: 0;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fill,
-            minmax(220px, 1fr)
-        );
-
-    align-items: stretch;
-
-    gap: 30px;
-
-    list-style: none;
-}
-
-
-.search-result {
-    min-width: 0;
+.search-result-card,
+.movie-suggestion-card {
     height: 100%;
 }
 
 
 /*
- * movie-card already provides the shared DVD-case appearance.
- *
- * This class only contains adjustments that are specific to
- * temporary search results.
+ * Search and Explore reserve the same compact title area so cards
+ * remain aligned even when movie titles have different lengths.
  */
-.search-result-card {
-    height: 100%;
-}
-
-
-/*
- * Search results do not yet contain a director.
- *
- * A slightly smaller title area therefore gives the card a more
- * compact layout while still reserving enough space for two lines.
- */
-.search-result-card .movie-title-block {
+.search-result-card .movie-title-block,
+.movie-suggestion-card .movie-title-block {
     height: 3.2rem;
 }
 
 
 /*
- * The metadata section currently contains only the release year.
- *
- * Keeping the same movie-details structure as the collection makes
- * the visual language consistent across both pages.
+ * Both temporary card types use the same spacing above their
+ * metadata section.
  */
-.search-result-card .movie-details {
+.search-result-card .movie-details,
+.movie-suggestion-card .movie-details {
     margin-top: 14px;
 }
 
@@ -2072,7 +2000,8 @@ input {
  * Search errors and empty-result messages should remain visible
  * without looking like another movie card.
  */
-.search-message {
+.search-message,
+.explore-message {
     margin: 0;
     padding: 24px;
 
@@ -2101,147 +2030,6 @@ input {
     display: flex;
     flex-direction: column;
     gap: 32px;
-}
-
-
-/*
- * ------------------------------------------------------------
- * Explore header
- * ------------------------------------------------------------
- */
-
-
-/*
- * The title and recommendation count share one row on larger
- * screens.
- */
-.explore-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 32px;
-}
-
-
-.explore-title {
-    min-width: 0;
-}
-
-
-.explore-title h1 {
-    margin: 0;
-
-    font-family:
-        "Arial Black",
-        "Trebuchet MS",
-        sans-serif;
-
-    font-size: clamp(2rem, 5vw, 3.7rem);
-    line-height: 1;
-
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-
-    /*
-     * Long member names may wrap instead of forcing the page
-     * beyond the available screen width.
-     */
-    overflow-wrap: anywhere;
-}
-
-
-/*
- * The count shows how many recommendations are currently available
- * on the Explore page.
- *
- * Red distinguishes the curated Explore area from the gold search
- * and collection accents.
- */
-.explore-count {
-    flex-shrink: 0;
-
-    margin: 0;
-    padding-bottom: 4px;
-
-    color: var(--color-accent-gold);
-
-    font-size: 0.75rem;
-    font-weight: 800;
-
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-}
-
-
-/*
- * ------------------------------------------------------------
- * Explore recommendation grid
- * ------------------------------------------------------------
- */
-
-
-/*
- * Explore uses the same shelf dimensions as Collection and Search.
- *
- * auto-fill keeps unused columns available so a small number of
- * recommendations does not create unusually wide movie cards.
- */
-.movie-suggestions {
-    margin: 0;
-    padding: 0;
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fill,
-            minmax(220px, 1fr)
-        );
-
-    align-items: stretch;
-
-    gap: 30px;
-
-    list-style: none;
-}
-
-
-.movie-suggestion {
-    min-width: 0;
-    height: 100%;
-}
-
-
-/*
- * movie-card already supplies the common DVD-case appearance.
- *
- * movie-suggestion-card contains only Explore-specific adjustments.
- */
-.movie-suggestion-card {
-    height: 100%;
-}
-
-
-/*
- * The red label gives curated recommendations a small visual
- * distinction from normal catalog search results.
- */
-.movie-suggestion-card .movie-case-label {
-    color: var(--color-accent-gold);
-}
-
-
-/*
- * A fixed title area helps recommendation cards remain aligned even
- * when movie titles have different lengths.
- */
-.movie-suggestion-card .movie-title-block {
-    height: 3.2rem;
-}
-
-
-.movie-suggestion-card .movie-details {
-    margin-top: 14px;
 }
 
 
@@ -2285,32 +2073,6 @@ input {
 
     letter-spacing: 0.09em;
     text-transform: uppercase;
-}
-
-
-/*
- * ------------------------------------------------------------
- * Explore feedback
- * ------------------------------------------------------------
- */
-
-
-/*
- * If the curated recommendation file contains no movies, Explore
- * still keeps the normal page structure and displays a clear
- * message instead of an empty area.
- */
-.explore-message {
-    margin: 0;
-    padding: 24px;
-
-    background: var(--color-surface);
-
-    border: 1px dashed var(--color-border);
-
-    color: var(--color-text-muted);
-
-    text-align: center;
 }
 
 
@@ -2364,27 +2126,17 @@ input {
 
 /*
  * ------------------------------------------------------------
- * Collection responsive adjustments
+ * Shared movie page responsive adjustments
  * ------------------------------------------------------------
  */
 
 @media (max-width: 800px) {
-    .collection-title-row {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .search-title-row {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 16px;
-    }
-
+    .collection-title-row,
+    .search-title-row,
     .explore-title-row {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 16px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
     }
 
     .movie-discovery {
@@ -2395,10 +2147,12 @@ input {
 
 @media (max-width: 520px) {
     /*
-     * On phones we deliberately use one full-width DVD per row.
+     * On phones every movie shelf uses one full-width card per row.
      * This keeps posters and controls comfortably readable.
      */
-    .movie-list {
+    .movie-list,
+    .search-results,
+    .movie-suggestions {
         grid-template-columns: 1fr;
         gap: 24px;
     }
@@ -2418,15 +2172,5 @@ input {
 
     .search-again-section {
         padding: 16px;
-    }
-
-    .search-results {
-        grid-template-columns: 1fr;
-        gap: 24px;
-    }
-
-    .movie-suggestions {
-        grid-template-columns: 1fr;
-        gap: 24px;
     }
 }
