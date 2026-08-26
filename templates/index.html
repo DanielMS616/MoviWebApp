@@ -132,6 +132,10 @@
                                     ) }}"
                                     method="post"
                                     class="delete-user-form"
+                                    data-confirm-message="
+                                        Remove '{{ user.name }}' and all movies
+                                        in this member's collection?
+                                    "
                                 >
                                     <button
                                         type="submit"

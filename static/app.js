@@ -218,6 +218,52 @@ setupPosterFallbacks();
 
 
 /*
+ * Adds a confirmation step to destructive form actions.
+ *
+ * The confirmation text is stored in the form's
+ * data-confirm-message attribute so that each form can provide
+ * a message that matches the resource being deleted.
+ */
+function setupDeleteConfirmations() {
+    const deleteForms = document.querySelectorAll(
+        "form[data-confirm-message]"
+    );
+
+    deleteForms.forEach((form) => {
+        form.addEventListener(
+            "submit",
+            (event) => {
+                const message = (
+                    form.dataset.confirmMessage
+                        .trim()
+                        .replace(/\s+/g, " ")
+                );
+
+                /*
+                 * window.confirm() returns true when the user accepts
+                 * the action and false when it is cancelled.
+                 */
+                const confirmed = window.confirm(
+                    message
+                );
+
+                /*
+                 * Cancelling prevents the form's normal POST request.
+                 * The database therefore remains completely unchanged.
+                 */
+                if (!confirmed) {
+                    event.preventDefault();
+                }
+            }
+        );
+    });
+}
+
+
+setupDeleteConfirmations();
+
+
+/*
  * Add Movie and Update Movie both reload a page on which the same
  * movie still exists. Their forms therefore use the same position
  * preservation mechanism.
