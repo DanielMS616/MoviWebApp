@@ -1154,6 +1154,22 @@ def page_not_found(error):
     ), 404
 
 
+@app.errorhandler(500)
+def internal_server_error(error):
+    """
+    Displays a custom page when an unexpected internal error occurs.
+
+    Rolling back the current database session ensures that a failed
+    transaction does not leave the session in an unusable state.
+    """
+
+    db.session.rollback()
+
+    return render_template(
+        "500.html"
+    ), 500
+
+
 if __name__ == "__main__":
     # The application context gives SQLAlchemy access to the
     # Flask application's database configuration.
