@@ -89,15 +89,19 @@ data_manager = DataManager()
 
 def normalize_omdb_value(value):
     """
-    Converts missing OMDb values into Python None.
+    Converts missing or unusable OMDb values into Python None.
 
-    OMDb often returns the string "N/A" when information is unavailable.
-    Inside MoviWeb and the database, None represents missing data more
-    accurately than storing "N/A" as if it were real information.
+    OMDb normally returns textual values. Unexpected non-string values
+    are treated as unavailable instead of causing the request to fail.
     """
 
     # None already represents missing information.
     if value is None:
+        return None
+
+    # OMDb normally returns strings for the values used by MoviWeb.
+    # Unexpected data types are treated as unavailable information.
+    if not isinstance(value, str):
         return None
 
     # Removes unnecessary whitespace around values returned by the API.
@@ -180,6 +184,15 @@ def enrich_search_results(search_results, api_key):
     enriched_results = []
 
     for result in search_results:
+        # Every OMDb search result should be a dictionary.
+        # Invalid individual entries are skipped so that valid movie
+        # results can still be displayed.
+        if not isinstance(result, dict):
+            print(
+                "OMDb search result has an invalid structure."
+            )
+            continue
+
         # copy() creates a separate dictionary for this result.
         #
         # This allows MoviWeb to add its own normalized fields without
@@ -236,6 +249,20 @@ def enrich_search_results(search_results, api_key):
             print(
                 "OMDb detail request failed "
                 f"for {imdb_id}: {error}"
+            )
+
+            enriched_results.append(
+                enriched_result
+            )
+            continue
+
+        # A successful OMDb detail response should be a JSON object.
+        # An unexpected structure affects only this optional enrichment,
+        # not the complete search result.
+        if not isinstance(detail_data, dict):
+            print(
+                "OMDb detail response has an invalid structure "
+                f"for {imdb_id}."
             )
 
             enriched_results.append(
@@ -549,6 +576,26 @@ def search_movies(user_id):
             )
         ), 502
 
+    # A successful OMDb search response should be a JSON object.
+    # Another top-level structure cannot be processed as movie results.
+    if not isinstance(search_data, dict):
+        print(
+            "OMDb search response has an invalid structure."
+        )
+
+        return render_template(
+            "search_results.html",
+            user=user,
+            user_id=user_id,
+            query=query,
+            search_results=[],
+            total_results=0,
+            search_error=(
+                "The movie service returned an unexpected response. "
+                "Please try again."
+            )
+        ), 502
+
     # OMDb may return HTTP 200 even when the actual search did not
     # produce usable results.
     if search_data.get("Response") == "False":
@@ -574,6 +621,26 @@ def search_movies(user_id):
 
     # OMDb stores successful search matches inside the "Search" list.
     search_results = search_data.get("Search", [])
+
+    # OMDb stores successful search matches in a list.
+    # A different structure cannot be processed as search results.
+    if not isinstance(search_results, list):
+        print(
+            "OMDb Search field has an invalid structure."
+        )
+
+        return render_template(
+            "search_results.html",
+            user=user,
+            user_id=user_id,
+            query=query,
+            search_results=[],
+            total_results=0,
+            search_error=(
+                "The movie service returned an unexpected response. "
+                "Please try again."
+            )
+        ), 502
 
     # The basic search results are enriched with optional detail data
     # such as director, genre, runtime and IMDb rating.
@@ -803,6 +870,29 @@ def add_movie(user_id):
             (
                 "The selected movie could not be loaded. "
                 "Please try again."
+            ),
+            "error",
+            imdb_id
+        )
+
+        return redirect_after_movie_action(
+            user_id,
+            source,
+            query,
+            imdb_id
+        )
+
+    # A successful OMDb movie response should be a JSON object.
+    # An unexpected structure cannot safely be converted into a Movie.
+    if not isinstance(movie_data, dict):
+        print(
+            "OMDb movie response has an invalid structure."
+        )
+
+        flash_movie_message(
+            (
+                "The selected movie returned unexpected data "
+                "and could not be added."
             ),
             "error",
             imdb_id
