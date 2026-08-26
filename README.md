@@ -1,13 +1,13 @@
 # MoviWeb
 
+![MoviWeb – Collection View](MoviWebBanner.jpeg)
+
 MoviWeb is a Flask web application for managing personal movie collections.  
 Multiple members can be created, and each member owns an individual collection. Movies are searched through the OMDb API, enriched with metadata, and stored locally in a SQLite database once they are added to a collection.
 
 The project was built as a learning project. The focus is therefore not only on the visible result, but on keeping the flow between Flask routes, database access, external API data, templates, and frontend behavior understandable and well separated.
 
 **Live Deployment:** <https://danielms616.pythonanywhere.com/>
-
-![MoviWeb – Collection View](MoviWebBanner.jpeg)
 
 ---
 
@@ -34,7 +34,6 @@ The project was built as a learning project. The focus is therefore not only on 
 19. [Production-Readiness Boundaries](#production-readiness-boundaries)
 20. [Intentional Non-Goals](#intentional-non-goals)
 21. [Possible Future Improvements](#possible-future-improvements)
-22. [Overall Data Flow](#overall-data-flow)
 
 ---
 
@@ -179,69 +178,20 @@ MoviWeb does not use a complex application architecture, but it separates the mo
 
 ```mermaid
 flowchart LR
-    subgraph CLIENT["Client"]
-        B[Browser]
-        JS[static/app.js]
-        CSS[static/style.css]
+    A[Browser] --> B[Flask Routes<br>app.py]
+    B --> C[Jinja Templates]
+    C --> A
 
-        JS -->|client-side behavior| B
-        CSS -->|styling| B
-    end
+    B --> D[DataManager<br>data_manager.py]
+    D --> E[SQLAlchemy Models<br>models.py]
+    E --> F[(SQLite)]
 
-    subgraph APP["Flask Application"]
-        R[Routes and application logic<br/>app.py]
-        T[Jinja templates<br/>templates/]
-        DM[DataManager<br/>data_manager.py]
-        M[SQLAlchemy models<br/>models.py]
+    B --> G[OMDb API]
+    B --> H[Explore JSON]
 
-        R -->|renders with| T
-        R -->|CRUD operations| DM
-        DM -->|queries and mutations| M
-    end
-
-    subgraph DATA["Persistence"]
-        DB[(SQLite<br/>data/movies.db)]
-    end
-
-    subgraph SOURCES["External and Local Data Sources"]
-        O[OMDb API]
-        E[Explore recommendations<br/>data/movie_suggestions.json]
-    end
-
-    B -->|HTTP request| R
-    R -->|HTML response| B
-
-    M -->|ORM / SQL| DB
-
-    R <-->|HTTP / JSON| O
-    E -->|read-only JSON| R
+    I[static/app.js] --> A
+    J[static/style.css] --> A
 ```
-
-The diagram separates four different areas:
-
-```text
-Client
-    ↓
-Flask Application
-    ↓
-Persistence
-
-External and local data sources
-    ↕
-Flask Application
-```
-
-The browser communicates with Flask through HTTP.
-
-Flask is responsible for application logic and coordinates the other parts of the project:
-
-- Jinja templates render HTML,
-- the `DataManager` handles database operations,
-- SQLAlchemy models define persistent data,
-- SQLite stores users and movies,
-- OMDb provides external movie information,
-- the local Explore JSON provides curated recommendations,
-- CSS and JavaScript run in the browser.
 
 ### `app.py`
 
