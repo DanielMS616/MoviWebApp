@@ -1,13 +1,13 @@
 # MoviWeb
 
-![MoviWeb – Collection View](MoviWebBanner.jpeg)
-
 MoviWeb is a Flask web application for managing personal movie collections.  
 Multiple members can be created, and each member owns an individual collection. Movies are searched through the OMDb API, enriched with metadata, and stored locally in a SQLite database once they are added to a collection.
 
 The project was built as a learning project. The focus is therefore not only on the visible result, but on keeping the flow between Flask routes, database access, external API data, templates, and frontend behavior understandable and well separated.
 
 **Live Deployment:** <https://danielms616.pythonanywhere.com/>
+
+![MoviWeb – Collection View](MoviWebBanner.jpeg)
 
 ---
 
