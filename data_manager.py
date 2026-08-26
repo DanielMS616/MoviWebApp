@@ -1,3 +1,5 @@
+from sqlalchemy.exc import IntegrityError
+
 from models import db, User, Movie
 
 
@@ -93,13 +95,34 @@ class DataManager:
             imdb_id=movie.imdb_id
         ).first()
 
-        # If the combination already exists, the movie must not be added
-        # again for the same user.
+        # Normal duplicate attempts are handled before an INSERT is made.
         if existing_movie:
             return False
 
         db.session.add(movie)
-        db.session.commit()
+
+        try:
+            db.session.commit()
+
+        # The database UNIQUE constraint is the final protection against
+        # duplicate movies if another insert happens after the check above.
+        except IntegrityError:
+            db.session.rollback()
+
+            # After the rollback, check whether the expected duplicate now
+            # exists. If so, the operation can be handled like any other
+            # duplicate attempt.
+            existing_movie = Movie.query.filter_by(
+                user_id=movie.user_id,
+                imdb_id=movie.imdb_id
+            ).first()
+
+            if existing_movie:
+                return False
+
+            # A different integrity error is unexpected and should not be
+            # disguised as a normal duplicate.
+            raise
 
         return True
 
