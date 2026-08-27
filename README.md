@@ -675,7 +675,7 @@ A broken recommendation file should not expose a raw Python exception page to th
 
 ## Frontend and UX
 
-The frontend deliberately avoids a JavaScript framework.
+The frontend deliberately avoids a JavaScript framework and uses only small amounts of vanilla JavaScript for browser-side interactions.
 
 Server-rendered Jinja pages are sufficient for the current flows.
 
@@ -1531,13 +1531,14 @@ These are future improvements, not requirements for the current project scope.
 The main architectural idea of the project is:
 
 ```text
-HTTP behavior
-is not
-database behavior
-is not
-external API behavior
-is not
-presentation
+The main architectural idea of the project is to keep different responsibilities separate:
+
+- Flask routes handle HTTP requests and application flow.
+- The DataManager and SQLAlchemy handle persistence.
+- OMDb integration handles external movie data.
+- Jinja, CSS, and JavaScript handle presentation and browser interaction.
+
+These parts work together, but each one has a clearly defined responsibility.
 ```
 
 The layers work together, but their responsibilities remain separated as far as is useful for the scope of this project.
